@@ -1,0 +1,210 @@
+/* ====================================Sidebar Layout========================================= */
+.sidebar-page {
+    display: flex;
+}
+
+.sidebar-container {
+    background-color: #fff5d7;
+    padding: 16px;
+    width: 250px;
+    border-right: 1px solid #ff5e6c;
+    height: 95vh;
+    margin-top: -47px;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ff5e6c;
+    margin-bottom: -5px;
+    margin-left: 25px;
+    margin-top: -18px;
+    font-style: oblique;
+}
+
+.sidebar-header h3 {
+    font-size: 12px;
+    color: #0582ca;
+    margin-top: -22px;
+    font-style: oblique;
+}
+
+.logo-icon {
+    color: #ff5e6c;
+}
+
+.sidebar-section {
+    margin-bottom: 0px;
+}
+
+.section-title {
+    font-size: 12px;
+    color: #0582ca;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+    font-weight: bold;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    color: #0582ca;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    font-weight: bold;
+    font-style: oblique;
+}
+
+.sidebar-link:hover {
+    background-color: #ffaaab;
+    color: #fff5d7;
+}
+
+.sidebar-link.active {
+    background-color: #feb300;
+    color: #fff5d7;
+    font-weight: bold;
+}
+
+.dropdown-arrow {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-submenu {
+    padding-left: 35px;
+    margin-top: 5px;
+}
+
+.sidebar-sublink {
+    font-size: 13px;
+    padding: 5px 0;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.2s;
+    font-weight: 700;
+}
+
+.sidebar-sublink:hover {
+    font-size: 15px;
+    color: #ff5e6c;
+}
+
+
+/* ====================================Navbar Layout========================================= */
+.navbar-page {
+    display: flex;
+}
+
+.navbar-container {
+    width: 80%;
+    margin-left: 282px;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 30px;
+    background: linear-gradient(270deg, #ff5e6c, #feb300, #ffaaab, #fff5d7, #0582ca);
+    background-size: 1200% 1200%;
+    animation: gradientMove 12s ease infinite;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient Animation */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* User Profile */
+.user-profile {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.user-profile:hover {
+    background-color: #ffaaab;
+    color: #fff5d7;
+}
+
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.user-name {
+    font-weight: bold;
+    font-size: 20px;
+    color: #fff5d7;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 83%;
+    right: -31px;
+    background-color: #fff5d7;
+    border: 1px solid #ff5e6c;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+    z-index: 10;
+    width: 160px;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+    color: #ff5e6c;
+}
+
+.dropdown-item:hover {
+    background-color: #ffaaab;
+    color: #fff;
+}
+
+.navbar-search-container {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    width: 100%;
+    gap: 8px;
+}
+
+.navbar-search-container .search-icon {
+    color: #888;
+    font-size: 18px;
+}
+
+.navbar-search-container input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    font-family: 'Segoe UI', sans-serif;
+    background: transparent;
+}
