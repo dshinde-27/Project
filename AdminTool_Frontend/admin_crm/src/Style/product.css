@@ -368,7 +368,7 @@
 }
 
 
-/*------------------------------------  Main Model ----------------------------------------*/
+/*=======================================  Main Model ===========================================*/
 .modal-overlay-category {
   position: fixed;
   top: 0;
@@ -393,7 +393,19 @@
   overflow-y: auto;
 }
 
-.modal-content-category h3 {
+.modal-content-attribute {
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.modal-content-category h3,
+.modal-content-attribute h3 {
   margin-top: -1px;
   margin-bottom: 3px;
   border-bottom: 1px dashed var(--primary-text);
@@ -402,7 +414,8 @@
   padding-bottom: 4px;
 }
 
-.modal-content-category label {
+.modal-content-category label,
+.modal-content-attribute label {
   font-weight: 600;
   color: var(--primary-text);
   font-size: 14px;
@@ -410,7 +423,10 @@
 
 .modal-content-category input,
 .modal-content-category select,
-.modal-content-category textarea {
+.modal-content-category textarea,
+.modal-content-attribute input,
+.modal-content-attribute select,
+.modal-content-attribute textarea {
   padding: 6px 8px;
   border: 1px solid var(--secondary-text);
   border-radius: 6px;
@@ -422,7 +438,10 @@
 
 .modal-content-category input:focus,
 .modal-content-category select:focus,
-.modal-content-category textarea:focus {
+.modal-content-category textarea:focus,
+.modal-content-attribute input:focus,
+.modal-content-attribute select:focus,
+.modal-content-attribute textarea:focus {
   border-color: var(--primary-text);
   box-shadow: 0 0 4px rgba(5, 130, 202, 0.4);
 }
@@ -454,3 +473,32 @@
 }
 
 
+.btn-add-value{
+  background-color: #dc3545;
+  color: #fff;
+  border: 1px solid #dc3545;
+  border-radius: 5px;
+  height: 30px;
+}
+
+.btn-add-value:hover{
+  background-color: #feb300;
+  border: 1px solid #feb300;
+}
+
+.value-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.btn-remove {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: -11px;
+    margin-right: -43px;
+}

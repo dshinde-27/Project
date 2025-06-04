@@ -9,6 +9,7 @@ import State from './User Management/State';
 import City from './User Management/City';
 import Category from './Product Management/Category';
 import SubCategory from './Product Management/SubCategory';
+import Attribute from './Product Management/Attribute';
 
 function App() {
   const AuthenticatedLayout = ({ children }) => (
@@ -51,6 +52,9 @@ function App() {
          <Route path="/subcatgeory" element={
           <AuthenticatedLayout><SubCategory /></AuthenticatedLayout>
         } /> 
+        <Route path="/attribute" element={
+          <AuthenticatedLayout><Attribute /></AuthenticatedLayout>
+        } />
       </Routes>
     </Router>
   );

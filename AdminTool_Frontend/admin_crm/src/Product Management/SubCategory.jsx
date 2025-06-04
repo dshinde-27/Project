@@ -109,8 +109,7 @@ function SubCategory() {
     };
 
     return (
-        <div
-            className='category-page'>
+        <div className='category-page'>
             <Navbar />
             <div className='main-layout'>
                 <Sidebar />
