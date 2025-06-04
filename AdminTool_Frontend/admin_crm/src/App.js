@@ -6,7 +6,9 @@ import Page from './User Management/Page';
 import Role from './User Management/Role';
 import Country from './User Management/Country';
 import State from './User Management/State';
-import City from './User Management/City'
+import City from './User Management/City';
+import Category from './Product Management/Category';
+import SubCategory from './Product Management/SubCategory';
 
 function App() {
   const AuthenticatedLayout = ({ children }) => (
@@ -42,6 +44,12 @@ function App() {
         } /> 
          <Route path="/city" element={
           <AuthenticatedLayout><City /></AuthenticatedLayout>
+        } /> 
+         <Route path="/category" element={
+          <AuthenticatedLayout><Category /></AuthenticatedLayout>
+        } /> 
+         <Route path="/subcatgeory" element={
+          <AuthenticatedLayout><SubCategory /></AuthenticatedLayout>
         } /> 
       </Routes>
     </Router>

@@ -1,0 +1,456 @@
+/* ======================== COLOR VARIABLES ======================== */
+:root {
+  --light-yellow: #fff5d7;
+  --pink-red: #ff5e6c;
+  --amber: #feb300;
+  --light-pink: #ffaaab;
+  --azure-blue: #0582ca;
+
+  --primary-text: #0582ca;
+  --secondary-text: #ff5e6c;
+}
+
+/* ======================== PAGE LAYOUT ======================== */
+.category-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  /* background: linear-gradient(to bottom right, var(--light-yellow), var(--light-pink)); */
+}
+
+.main-layout {
+  display: flex;
+  flex: 1;
+}
+
+.category-container {
+  flex: 1 1;
+  padding: 15px;
+  margin-top: 0;
+  overflow-y: auto;
+  height: 90vh;
+}
+
+.category-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.category-container::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+
+.category-container::-webkit-scrollbar-thumb {
+  background-color: var(--secondary-text);
+  border-radius: 4px;
+  border: 1px solid #721c24;
+}
+
+/* ======================== HEADER ======================== */
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: -29px;
+  border-bottom: 1px dashed var(--primary-text);
+}
+
+.category-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--azure-blue);
+  margin-bottom: 9px;
+  font-style: oblique;
+}
+
+.category-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: -16px;
+}
+
+.search-icon-category,
+.search-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--primary-text);
+}
+
+.search-box {
+  padding: 6px 10px;
+  border: 1px solid var(--primary-text);
+  border-radius: 4px;
+  font-size: 14px;
+  color: var(--primary-text);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* ======================== BUTTON ======================== */
+.add-category-btn {
+  background-color: var(--amber);
+  color: white;
+  border: 1px solid var(--amber);
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-category-btn:hover {
+  background-color: var(--light-yellow);
+  color: var(--primary-text);
+}
+
+/* ======================== TABLE ======================== */
+.category-list {
+  margin-top: -16px;
+}
+
+.category-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.category-table th,
+.category-table td {
+  padding: 5px 10px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 12px;
+  color: var(--primary-text);
+}
+
+.category-table th {
+  background-color: var(--light-yellow);
+  color: var(--primary-text);
+  font-size: 14px;
+}
+
+/* ======================== STATUS ======================== */
+.status {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.status.active {
+  background-color: var(--amber);
+  color: white;
+}
+
+.status.inactive {
+  background-color: var(--pink-red);
+  color: white;
+}
+
+/* ======================== ICONS & ACTIONS ======================== */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.icon {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  height: 19px;
+  width: 15px;
+}
+
+.icon:hover {
+  transform: scale(1.1);
+}
+
+.icon.edit,
+.icon.permission {
+  color: var(--primary-text);
+}
+
+.icon.delete {
+  color: #dc3545;
+}
+
+/*------------------------------------- Category List and details model---------------------------------------*/
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.category-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 6px;
+  width: 243px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 140px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--primary-text);
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.subcategory-list {
+  margin: 15px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.subcategory-list li {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.read-more {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--primary-text);
+  text-decoration: none;
+}
+
+.category-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  opacity: 0.6;
+  color: var(--secondary-text);
+}
+
+/* Modal Overlay and Box */
+.detail-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.detail-modal {
+  background: white;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  padding: 10px;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal Buttons and Content */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #888;
+  cursor: pointer;
+}
+
+.modal-icon {
+  text-align: center;
+  justify-items: center;
+  margin-bottom: 10px;
+  background-color: var(--light-pink);
+  border-radius: 50%;
+  width: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--secondary-text);
+}
+
+.modal-content-box h2 {
+  text-align: center;
+  margin: -11px;
+  color: var(--primary-text);
+}
+
+.by-admin {
+  text-align: center;
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.description-block,
+.subcat-block {
+  margin-bottom: 12px;
+  border-top: 1px dashed #ccc;
+}
+
+.description-block p,
+.subcat-block ul {
+  font-size: 14px;
+  color: #555;
+}
+
+.subcat-block ul {
+  padding-left: 20px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-btn {
+  background-color: var(--pink-red);
+  color: white;
+  border: none;
+  padding: 5px 9px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background-color: var(--light-pink);
+  color: var(--secondary-text);
+  border: none;
+  padding: 5px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Status Colors */
+.status.active {
+  color: var(--azure-blue);
+  font-weight: bold;
+}
+
+.status.inactive {
+  color: var(--pink-red);
+  font-weight: bold;
+}
+
+
+/*------------------------------------  Main Model ----------------------------------------*/
+.modal-overlay-category {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content-category {
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.modal-content-category h3 {
+  margin-top: -1px;
+  margin-bottom: 3px;
+  border-bottom: 1px dashed var(--primary-text);
+  color: var(--secondary-text);
+  font-size: 18px;
+  padding-bottom: 4px;
+}
+
+.modal-content-category label {
+  font-weight: 600;
+  color: var(--primary-text);
+  font-size: 14px;
+}
+
+.modal-content-category input,
+.modal-content-category select,
+.modal-content-category textarea {
+  padding: 6px 8px;
+  border: 1px solid var(--secondary-text);
+  border-radius: 6px;
+  color: var(--primary-text);
+  font-size: 14px;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-content-category input:focus,
+.modal-content-category select:focus,
+.modal-content-category textarea:focus {
+  border-color: var(--primary-text);
+  box-shadow: 0 0 4px rgba(5, 130, 202, 0.4);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.modal-actions button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background: var(--azure-blue);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.modal-actions button:hover {
+  background: var(--light-pink);
+  color: var(--primary-text);
+}
+
+.cancel-btn {
+  background: #aaa;
+}
+
+

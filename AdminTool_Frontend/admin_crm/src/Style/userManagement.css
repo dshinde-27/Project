@@ -61,6 +61,7 @@
   font-weight: bold;
   color: var(--azure-blue);
   margin-bottom: 9px;
+  font-style: oblique;
 }
 
 .userManage-actions {
