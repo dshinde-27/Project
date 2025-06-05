@@ -16,6 +16,68 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "GetEmailById",
+    "RelativePath": "api/Email/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "GetInboxEmails",
+    "RelativePath": "api/Email/inbox",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "SendEmail",
+    "RelativePath": "api/Email/send",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CRM_Api.Models.Email",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "GetSentEmails",
+    "RelativePath": "api/Email/sent",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "SyncInbox",
+    "RelativePath": "api/Email/sync-inbox",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CRM_Api.Controllers.LocationController",
     "Method": "AddCity",
     "RelativePath": "api/Location/AddCity",

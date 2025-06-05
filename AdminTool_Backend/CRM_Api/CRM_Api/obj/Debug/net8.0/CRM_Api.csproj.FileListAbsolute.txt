@@ -83,3 +83,6 @@ C:\Users\DEVNEW\Desktop\React\Sample\Project\AdminTool_Backend\CRM_Api\CRM_Api\o
 C:\Users\DEVNEW\Desktop\React\Sample\Project\AdminTool_Backend\CRM_Api\CRM_Api\obj\Debug\net8.0\CRM_Api.pdb
 C:\Users\DEVNEW\Desktop\React\Sample\Project\AdminTool_Backend\CRM_Api\CRM_Api\obj\Debug\net8.0\CRM_Api.genruntimeconfig.cache
 C:\Users\DEVNEW\Desktop\React\Sample\Project\AdminTool_Backend\CRM_Api\CRM_Api\obj\Debug\net8.0\ref\CRM_Api.dll
+C:\Users\DEVNEW\Desktop\React\Sample\Project\AdminTool_Backend\CRM_Api\CRM_Api\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\DEVNEW\Desktop\React\Sample\Project\AdminTool_Backend\CRM_Api\CRM_Api\bin\Debug\net8.0\MailKit.dll
+C:\Users\DEVNEW\Desktop\React\Sample\Project\AdminTool_Backend\CRM_Api\CRM_Api\bin\Debug\net8.0\MimeKit.dll

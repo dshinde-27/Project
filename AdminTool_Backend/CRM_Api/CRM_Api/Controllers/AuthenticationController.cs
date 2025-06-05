@@ -38,10 +38,18 @@ namespace CRM_Api.Controllers
                                 UserId = reader["Id"],
                                 Username = reader["Username"].ToString(),
                                 RoleId = Convert.ToInt32(reader["RoleId"]),
-                                Role = reader["Name"].ToString()
+                                Role = reader["Name"].ToString(),
+                                Email = reader["Email"].ToString()
                             };
 
-                            return Ok(new { Role = user.RoleId, UserId = user.UserId });
+                            return Ok(new
+                            {
+                                Role = user.RoleId,
+                                UserId = user.UserId,
+                                Username = user.Username,
+                                Email = user.Email
+                            });
+
                         }
                         else
                         {

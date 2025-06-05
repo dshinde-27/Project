@@ -41,7 +41,7 @@ namespace CRM_Api.Helpers
         {
             using SqlConnection conn = new SqlConnection(GetConnectionString());
             using SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddRange(parameters.ToArray()); // ✅ Fix: Convert List to Array
+            cmd.Parameters.AddRange(parameters.ToArray());
             conn.Open();
             return cmd.ExecuteNonQuery();
         }
@@ -58,6 +58,18 @@ namespace CRM_Api.Helpers
                 return cmd.ExecuteScalar();
             }
         }
+
+            public static int ExecuteNonQueryWithParam(string connectionString, string commandText, params SqlParameter[] parameters)
+            {
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.Parameters.AddRange(parameters);
+                conn.Open();
+                return cmd.ExecuteNonQuery();
+            }
+            }
+
         public static object ExecuteScalarWithParam(string query, List<SqlParameter> parameters)
         {
             using SqlConnection conn = new SqlConnection(GetConnectionString());
@@ -65,6 +77,32 @@ namespace CRM_Api.Helpers
             cmd.Parameters.AddRange(parameters.ToArray());
             conn.Open();
             return cmd.ExecuteScalar();
+        }
+
+        public static object ExecuteScalarWithParam(string connString, string query, params SqlParameter[] parameters)
+        {
+            using SqlConnection conn = new(connString);
+            using SqlCommand cmd = new(query, conn);
+            cmd.Parameters.AddRange(parameters);
+            conn.Open();
+            return cmd.ExecuteScalar();
+        }
+
+        public static DataSet ExecuteDatasetCommand(string connectionString, CommandType commandType, string commandText, params SqlParameter[] parameters)
+        {
+            using (var conn = new SqlConnection(connectionString))
+            using (var cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = commandType;
+
+                if (parameters != null)
+                    cmd.Parameters.AddRange(parameters);
+
+                var adapter = new SqlDataAdapter(cmd);
+                var ds = new DataSet();
+                adapter.Fill(ds);
+                return ds;
+            }
         }
 
         public static DataSet ExecuteDataSet(string qry)
