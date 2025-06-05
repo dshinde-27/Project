@@ -11,20 +11,17 @@ function Inbox() {
     const email = localStorage.getItem("email") || "unknown@gmail.com";
     const [isComposeOpen, setIsComposeOpen] = useState(false);
 
-    // Sent emails state
     const [sentEmails, setSentEmails] = useState([]);
     const [loadingSent, setLoadingSent] = useState(false);
     const [errorSent, setErrorSent] = useState(null);
 
-    // Inbox emails state
     const [inboxEmails, setInboxEmails] = useState([]);
     const [loadingInbox, setLoadingInbox] = useState(false);
     const [errorInbox, setErrorInbox] = useState(null);
 
-    // Selected tab state
     const [selectedTab, setSelectedTab] = useState("inbox");
+    const [selectedEmail, setSelectedEmail] = useState(null);
 
-    // Fetch sent emails when tab is "sent"
     useEffect(() => {
         if (selectedTab === "sent") {
             setLoadingSent(true);
@@ -45,7 +42,6 @@ function Inbox() {
         }
     }, [selectedTab]);
 
-    // Fetch inbox emails when tab is "inbox"
     useEffect(() => {
         if (selectedTab === "inbox") {
             setLoadingInbox(true);
@@ -85,119 +81,82 @@ function Inbox() {
                         </button>
 
                         <ul className='email-menu'>
-                            <li
-                                className={selectedTab === "inbox" ? "active" : ""}
-                                onClick={() => setSelectedTab("inbox")}
-                            >
+                            <li className={selectedTab === "inbox" ? "active" : ""} onClick={() => { setSelectedTab("inbox"); setSelectedEmail(null); }}>
                                 <MdInbox /> Inbox <span className='count'>{inboxEmails.length}</span>
                             </li>
-                            <li
-                                className={selectedTab === "starred" ? "active" : ""}
-                                onClick={() => setSelectedTab("starred")}
-                            >
+                            <li className={selectedTab === "starred" ? "active" : ""} onClick={() => { setSelectedTab("starred"); setSelectedEmail(null); }}>
                                 <MdOutlineStar /> Starred <span className='count'>46</span>
                             </li>
-                            <li
-                                className={selectedTab === "sent" ? "active" : ""}
-                                onClick={() => setSelectedTab("sent")}
-                            >
+                            <li className={selectedTab === "sent" ? "active" : ""} onClick={() => { setSelectedTab("sent"); setSelectedEmail(null); }}>
                                 <MdSend /> Sent <span className='count'>{sentEmails.length}</span>
                             </li>
-                            <li
-                                className={selectedTab === "drafts" ? "active" : ""}
-                                onClick={() => setSelectedTab("drafts")}
-                            >
+                            <li className={selectedTab === "drafts" ? "active" : ""} onClick={() => { setSelectedTab("drafts"); setSelectedEmail(null); }}>
                                 <MdDrafts /> Drafts <span className='count'>12</span>
                             </li>
-                            <li
-                                className={selectedTab === "deleted" ? "active" : ""}
-                                onClick={() => setSelectedTab("deleted")}
-                            >
+                            <li className={selectedTab === "deleted" ? "active" : ""} onClick={() => { setSelectedTab("deleted"); setSelectedEmail(null); }}>
                                 <MdDelete /> Deleted <span className='count'>8</span>
                             </li>
-                            <li
-                                className={selectedTab === "spam" ? "active" : ""}
-                                onClick={() => setSelectedTab("spam")}
-                            >
+                            <li className={selectedTab === "spam" ? "active" : ""} onClick={() => { setSelectedTab("spam"); setSelectedEmail(null); }}>
                                 <MdReport /> Spam <span className='count'>0</span>
                             </li>
                         </ul>
                     </div>
 
                     <div className='email-inbox'>
-                        {/* Inbox Tab */}
-                        {selectedTab === "inbox" && (
-                            <>
-                                <h2>Inbox Emails</h2>
-                                {loadingInbox && <p>Loading inbox emails...</p>}
-                                {errorInbox && <p style={{ color: 'red' }}>Error: {errorInbox}</p>}
-
-                                <div className="email-list">
-                                    {!loadingInbox && !errorInbox && inboxEmails.map((email, index) => (
-                                        <div key={email.Id || index} className="email-card">
-                                            <div className="email-left">
-                                                <input type="checkbox" />
-                                                <div className="avatar">
-                                                    {email.fromEmail?.charAt(0) || "I"}
-                                                </div>
-                                                <div className="email-info">
-                                                    <div className="sender">{email.fromEmail}</div>
-                                                    <div className="subject">{email.subject}</div>
-                                                    <div className="preview">{email.body?.substring(0, 60)}...</div>
-                                                    {email.attachmentNames && (
-                                                        <div className="attachments">Attachments: {email.attachmentNames}</div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="email-right">
-                                                <span className="timestamp">
-                                                    {new Date(email.receviedTime).toLocaleString()}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    ))}
+                        {selectedEmail ? (
+                            <div className="email-detail-card">
+                                <button className="back-btn" onClick={() => setSelectedEmail(null)}>← Back</button>
+                                <h3>{selectedEmail.subject}</h3>
+                                <p><strong>From:</strong> {selectedEmail.fromEmail}</p>
+                                <p><strong>To:</strong> {selectedEmail.toEmail}</p>
+                                <p>
+                                    <strong>{selectedTab === "inbox" ? "Received" : "Sent"}:</strong>{" "}
+                                    {new Date(selectedEmail.receviedTime || selectedEmail.sentTime).toLocaleString()}
+                                </p>
+                                <div className="email-body">
+                                    <p>{selectedEmail.body}</p>
                                 </div>
-                            </>
-                        )}
-
-                        {/* Sent Tab */}
-                        {selectedTab === "sent" && (
+                                {selectedEmail.attachmentNames && (
+                                    <div className="attachments">
+                                        <strong>Attachments:</strong> {selectedEmail.attachmentNames}
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
                             <>
-                                <h2>Sent Emails</h2>
-                                {loadingSent && <p>Loading sent emails...</p>}
-                                {errorSent && <p style={{ color: 'red' }}>Error: {errorSent}</p>}
-
-                                <div className="email-list">
-                                    {!loadingSent && !errorSent && sentEmails.map((email, index) => (
-                                        <div key={email.Id || index} className="email-card">
-                                            <div className="email-left">
-                                                <input type="checkbox" />
-                                                <div className="avatar">
-                                                    {email.toEmail?.charAt(0) || "S"}
+                                <h2>{selectedTab.charAt(0).toUpperCase() + selectedTab.slice(1)} Emails</h2>
+                                {(selectedTab === "inbox" && loadingInbox) || (selectedTab === "sent" && loadingSent) ? (
+                                    <p>Loading emails...</p>
+                                ) : (selectedTab === "inbox" && errorInbox) || (selectedTab === "sent" && errorSent) ? (
+                                    <p style={{ color: 'red' }}>Error: {errorInbox || errorSent}</p>
+                                ) : (
+                                    <div className="email-list">
+                                        {(selectedTab === "inbox" ? inboxEmails : sentEmails).map((email, index) => (
+                                            <div key={email.Id || index} className="email-card" onClick={() => setSelectedEmail(email)}>
+                                                <div className="email-left">
+                                                    <input type="checkbox" />
+                                                    <div className="avatar">
+                                                        {(selectedTab === "inbox" ? email.fromEmail : email.toEmail)?.charAt(0) || "?"}
+                                                    </div>
+                                                    <div className="email-info">
+                                                        <div className="sender">{selectedTab === "inbox" ? email.fromEmail : email.toEmail}</div>
+                                                        <div className="subject">{email.subject}</div>
+                                                        <div className="preview">{email.body?.substring(0, 60)}...</div>
+                                                        {email.attachmentNames && (
+                                                            <div className="attachments">Attachments: {email.attachmentNames}</div>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                                <div className="email-info">
-                                                    <div className="sender">{email.toEmail}</div>
-                                                    <div className="subject">{email.subject}</div>
-                                                    <div className="preview">{email.body?.substring(0, 60)}...</div>
-                                                    {email.attachmentNames && (
-                                                        <div className="attachments">Attachments: {email.attachmentNames}</div>
-                                                    )}
+                                                <div className="email-right">
+                                                    <span className="timestamp">
+                                                        {new Date(email.receviedTime || email.sentTime).toLocaleString()}
+                                                    </span>
                                                 </div>
                                             </div>
-                                            <div className="email-right">
-                                                <span className="timestamp">
-                                                    {new Date(email.sentTime).toLocaleString()}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
+                                        ))}
+                                    </div>
+                                )}
                             </>
-                        )}
-
-                        {/* Other tabs placeholders */}
-                        {selectedTab !== "sent" && selectedTab !== "inbox" && (
-                            <h2>{selectedTab.charAt(0).toUpperCase() + selectedTab.slice(1)} Emails (placeholder)</h2>
                         )}
                     </div>
                 </div>
