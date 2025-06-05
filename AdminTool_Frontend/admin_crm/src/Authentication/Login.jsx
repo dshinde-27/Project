@@ -11,12 +11,13 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    if (!userIdentifier || !password) {
-      alert("Please enter both username/email and password.");
-      return;
-    }
+const handleLogin = async () => {
+  if (!userIdentifier || !password) {
+    alert("Please enter both username/email and password.");
+    return;
+  }
 
+  try {
     const response = await fetch("https://localhost:7210/api/Authentication/Login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -27,9 +28,12 @@ function Login() {
       const userData = await response.json();
       console.log("API Response:", userData);
 
+      // Example: API returns userData.username and userData.email
       localStorage.setItem("userRole", userData.role);
       localStorage.setItem("userId", userData.userId);
-      localStorage.setItem("username", userIdentifier);
+localStorage.setItem("username", userData.username || userIdentifier);
+localStorage.setItem("email", userData.email || userIdentifier);
+
 
       if (userData.role === 1) {
         navigate("/user");
@@ -39,7 +43,12 @@ function Login() {
     } else {
       alert("Invalid Credentials");
     }
-  };
+  } catch (error) {
+    console.error("Login error:", error);
+    alert("Something went wrong. Please try again later.");
+  }
+};
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(prev => !prev);

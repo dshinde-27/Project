@@ -10,6 +10,8 @@ import City from './User Management/City';
 import Category from './Product Management/Category';
 import SubCategory from './Product Management/SubCategory';
 import Attribute from './Product Management/Attribute';
+import Inbox from './Email/Inbox';
+import OpenMail from './Email/OpenMail';
 
 function App() {
   const AuthenticatedLayout = ({ children }) => (
@@ -54,6 +56,12 @@ function App() {
         } /> 
         <Route path="/attribute" element={
           <AuthenticatedLayout><Attribute /></AuthenticatedLayout>
+        } />
+        <Route path="/email" element={
+          <AuthenticatedLayout><Inbox /></AuthenticatedLayout>
+        } />
+         <Route path="/email/:id" element={
+          <AuthenticatedLayout><OpenMail /></AuthenticatedLayout>
         } />
       </Routes>
     </Router>

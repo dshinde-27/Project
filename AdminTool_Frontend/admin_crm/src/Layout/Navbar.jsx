@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function Navbar() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    const storedName = localStorage.getItem("username") || "Guest";
+    const storedName = localStorage.getItem("username") || localStorage.getItem("email") || "Guest";
     const user = {
         name: storedName,
         //avatar: "https://i.pravatar.cc/150?img=3",
