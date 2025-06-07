@@ -3,24 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\AdminTool_Backend\\CRM_Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|c:\\users\\devnew\\desktop\\react\\sample\\project\\admintool_backend\\crm_api\\crm_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|solutionrelative:crm_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|c:\\users\\devnew\\desktop\\react\\sample\\project\\admintool_backend\\crm_api\\crm_api\\controllers\\emailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|solutionrelative:crm_api\\controllers\\emailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|c:\\users\\devnew\\desktop\\react\\sample\\project\\admintool_backend\\crm_api\\crm_api\\models\\email.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|solutionrelative:crm_api\\models\\email.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|c:\\users\\devnew\\desktop\\react\\sample\\project\\admintool_backend\\crm_api\\crm_api\\helpers\\sqlhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|solutionrelative:crm_api\\helpers\\sqlhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|c:\\users\\devnew\\desktop\\react\\sample\\project\\admintool_backend\\crm_api\\crm_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|solutionrelative:crm_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|c:\\users\\devnew\\desktop\\react\\sample\\project\\admintool_backend\\crm_api\\crm_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|solutionrelative:crm_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|c:\\users\\devnew\\desktop\\react\\sample\\project\\admintool_backend\\crm_api\\crm_api\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|solutionrelative:crm_api\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|c:\\users\\devnew\\desktop\\react\\sample\\project\\admintool_backend\\crm_api\\crm_api\\models\\email.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|solutionrelative:crm_api\\models\\email.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4A98BCFE-E924-4BB1-A91C-F5F3856D5A33}|CRM_Api\\CRM_Api.csproj|c:\\users\\devnew\\desktop\\react\\sample\\project\\admintool_backend\\crm_api\\crm_api\\models\\auth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,36 +38,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\AdminTool_Backend\\CRM_Api\\CRM_Api\\Program.cs",
+              "RelativeDocumentMoniker": "CRM_Api\\Program.cs",
+              "ToolTip": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\AdminTool_Backend\\CRM_Api\\CRM_Api\\Program.cs",
+              "RelativeToolTip": "CRM_Api\\Program.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAkwBcAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-07T06:56:48.556Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\AdminTool_Backend\\CRM_Api\\CRM_Api\\appsettings.json",
               "RelativeDocumentMoniker": "CRM_Api\\appsettings.json",
               "ToolTip": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\AdminTool_Backend\\CRM_Api\\CRM_Api\\appsettings.json",
               "RelativeToolTip": "CRM_Api\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-06-05T06:50:18.152Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "SqlHelper.cs",
               "DocumentMoniker": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\AdminTool_Backend\\CRM_Api\\CRM_Api\\Helpers\\SqlHelper.cs",
               "RelativeDocumentMoniker": "CRM_Api\\Helpers\\SqlHelper.cs",
               "ToolTip": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\AdminTool_Backend\\CRM_Api\\CRM_Api\\Helpers\\SqlHelper.cs",
               "RelativeToolTip": "CRM_Api\\Helpers\\SqlHelper.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAiwFkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACEAAAAAAAAAAAAswA4AAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T06:49:29.287Z"
+              "WhenOpened": "2025-06-05T06:49:29.287Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Email.cs",
               "DocumentMoniker": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\AdminTool_Backend\\CRM_Api\\CRM_Api\\Models\\Email.cs",
               "RelativeDocumentMoniker": "CRM_Api\\Models\\Email.cs",
@@ -75,20 +93,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "EmailController.cs",
               "DocumentMoniker": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\AdminTool_Backend\\CRM_Api\\CRM_Api\\Controllers\\EmailController.cs",
               "RelativeDocumentMoniker": "CRM_Api\\Controllers\\EmailController.cs",
               "ToolTip": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\AdminTool_Backend\\CRM_Api\\CRM_Api\\Controllers\\EmailController.cs",
               "RelativeToolTip": "CRM_Api\\Controllers\\EmailController.cs",
-              "ViewState": "AgIAAOQAAAAAAAAAAAAcwPIAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAIsBAAAAAAAAAAAAAJQBAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-05T06:46:53.932Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Auth.cs",
               "DocumentMoniker": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\AdminTool_Backend\\CRM_Api\\CRM_Api\\Models\\Auth.cs",
               "RelativeDocumentMoniker": "CRM_Api\\Models\\Auth.cs",
@@ -106,7 +124,7 @@
               "RelativeDocumentMoniker": "CRM_Api\\Controllers\\AuthenticationController.cs",
               "ToolTip": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\AdminTool_Backend\\CRM_Api\\CRM_Api\\Controllers\\AuthenticationController.cs",
               "RelativeToolTip": "CRM_Api\\Controllers\\AuthenticationController.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAUwDMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAswDMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-05T06:10:02.052Z"
             }

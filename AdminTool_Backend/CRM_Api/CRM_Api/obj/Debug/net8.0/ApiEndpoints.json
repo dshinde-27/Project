@@ -33,6 +33,32 @@
   },
   {
     "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "GetEmailsFromFolder",
+    "RelativePath": "api/Email/folder/{folderName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "folderName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "GetAvailableFolders",
+    "RelativePath": "api/Email/folders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
     "Method": "GetInboxEmails",
     "RelativePath": "api/Email/inbox",
     "HttpMethod": "GET",
@@ -62,16 +88,6 @@
     "Method": "GetSentEmails",
     "RelativePath": "api/Email/sent",
     "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CRM_Api.Controllers.EmailController",
-    "Method": "SyncInbox",
-    "RelativePath": "api/Email/sync-inbox",
-    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [],

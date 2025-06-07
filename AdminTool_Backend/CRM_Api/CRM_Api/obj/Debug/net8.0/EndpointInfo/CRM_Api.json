@@ -91,18 +91,6 @@
         }
       }
     },
-    "/api/Email/sync-inbox": {
-      "post": {
-        "tags": [
-          "Email"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Email/{id}": {
       "get": {
         "tags": [
@@ -118,6 +106,40 @@
               "format": "int32"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Email/folder/{folderName}": {
+      "get": {
+        "tags": [
+          "Email"
+        ],
+        "parameters": [
+          {
+            "name": "folderName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Email/folders": {
+      "get": {
+        "tags": [
+          "Email"
         ],
         "responses": {
           "200": {

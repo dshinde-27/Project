@@ -59,6 +59,12 @@
               "target": "Package",
               "version": "[6.1.0-preview1.25120.4, )"
             },
+            "Microsoft.Extensions.ApiDescription.Client": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.2, )"
+            },
             "NLog": {
               "target": "Package",
               "version": "[6.0.0-rc2, )"
@@ -70,6 +76,16 @@
             "NLog.Web.AspNetCore": {
               "target": "Package",
               "version": "[5.5.0, )"
+            },
+            "NSwag.ApiDescription.Client": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[13.18.2, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

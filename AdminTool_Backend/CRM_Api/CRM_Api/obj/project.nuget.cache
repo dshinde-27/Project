@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "UZYFxsa2TTk=",
+  "dgSpecHash": "WhX2pGXiwGE=",
   "success": true,
   "projectFilePath": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\AdminTool_Backend\\CRM_Api\\CRM_Api\\CRM_Api.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,7 @@
     "C:\\Users\\DEVNEW\\.nuget\\packages\\microsoft.bcl.cryptography\\8.0.0\\microsoft.bcl.cryptography.8.0.0.nupkg.sha512",
     "C:\\Users\\DEVNEW\\.nuget\\packages\\microsoft.data.sqlclient\\6.1.0-preview1.25120.4\\microsoft.data.sqlclient.6.1.0-preview1.25120.4.nupkg.sha512",
     "C:\\Users\\DEVNEW\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\6.0.2\\microsoft.data.sqlclient.sni.runtime.6.0.2.nupkg.sha512",
+    "C:\\Users\\DEVNEW\\.nuget\\packages\\microsoft.extensions.apidescription.client\\7.0.2\\microsoft.extensions.apidescription.client.7.0.2.nupkg.sha512",
     "C:\\Users\\DEVNEW\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\DEVNEW\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0\\microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\DEVNEW\\.nuget\\packages\\microsoft.extensions.caching.memory\\8.0.1\\microsoft.extensions.caching.memory.8.0.1.nupkg.sha512",
@@ -33,9 +34,12 @@
     "C:\\Users\\DEVNEW\\.nuget\\packages\\microsoft.openapi\\1.6.14\\microsoft.openapi.1.6.14.nupkg.sha512",
     "C:\\Users\\DEVNEW\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\DEVNEW\\.nuget\\packages\\mimekit\\4.12.0\\mimekit.4.12.0.nupkg.sha512",
+    "C:\\Users\\DEVNEW\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\DEVNEW\\.nuget\\packages\\nlog\\6.0.0-rc2\\nlog.6.0.0-rc2.nupkg.sha512",
     "C:\\Users\\DEVNEW\\.nuget\\packages\\nlog.extensions.logging\\6.0.0-rc2\\nlog.extensions.logging.6.0.0-rc2.nupkg.sha512",
     "C:\\Users\\DEVNEW\\.nuget\\packages\\nlog.web.aspnetcore\\5.5.0\\nlog.web.aspnetcore.5.5.0.nupkg.sha512",
+    "C:\\Users\\DEVNEW\\.nuget\\packages\\nswag.apidescription.client\\13.18.2\\nswag.apidescription.client.13.18.2.nupkg.sha512",
+    "C:\\Users\\DEVNEW\\.nuget\\packages\\nswag.msbuild\\13.18.2\\nswag.msbuild.13.18.2.nupkg.sha512",
     "C:\\Users\\DEVNEW\\.nuget\\packages\\swashbuckle.aspnetcore\\6.6.2\\swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
     "C:\\Users\\DEVNEW\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.6.2\\swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",
     "C:\\Users\\DEVNEW\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.6.2\\swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512",
