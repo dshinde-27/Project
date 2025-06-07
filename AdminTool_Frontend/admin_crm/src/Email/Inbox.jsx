@@ -105,7 +105,7 @@ function Inbox() {
                     <div className='email-inbox'>
                         {selectedEmail ? (
                             <div className="email-detail-card">
-                                <button className="back-btn" onClick={() => setSelectedEmail(null)}>← Back</button>
+                                <button className="back-btn" onClick={() => setSelectedEmail(null)}>Back</button>
                                 <h3>{selectedEmail.subject}</h3>
                                 <p><strong>From:</strong> {selectedEmail.fromEmail}</p>
                                 <p><strong>To:</strong> {selectedEmail.toEmail}</p>
