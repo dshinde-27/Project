@@ -33,6 +33,48 @@
   },
   {
     "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "DeleteEmail",
+    "RelativePath": "api/Email/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "ArchiveEmail",
+    "RelativePath": "api/Email/archive/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "GetArchivedEmails",
+    "RelativePath": "api/Email/archived",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
     "Method": "GetEmailsFromFolder",
     "RelativePath": "api/Email/folder/{folderName}",
     "HttpMethod": "GET",
@@ -69,6 +111,64 @@
   },
   {
     "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "LabelEmail",
+    "RelativePath": "api/Email/label/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "label",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "GetLabeledEmails",
+    "RelativePath": "api/Email/label/{label}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "label",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "MoveToFolder",
+    "RelativePath": "api/Email/move/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "folder",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
     "Method": "SendEmail",
     "RelativePath": "api/Email/send",
     "HttpMethod": "POST",
@@ -91,6 +191,58 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "StarEmail",
+    "RelativePath": "api/Email/star/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "GetStarredEmails",
+    "RelativePath": "api/Email/starred",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "SyncInbox",
+    "RelativePath": "api/Email/sync-inbox",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "UnstarEmail",
+    "RelativePath": "api/Email/unstar/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
