@@ -1,6 +1,6 @@
 USE [Marketa]
 GO
-/****** Object:  Table [dbo].[City]    Script Date: 2025-06-02 5:41:19 PM ******/
+/****** Object:  Table [dbo].[City]    Script Date: 2025-06-10 5:59:34 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -17,7 +17,7 @@ CREATE TABLE [dbo].[City](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Country]    Script Date: 2025-06-02 5:41:19 PM ******/
+/****** Object:  Table [dbo].[Country]    Script Date: 2025-06-10 5:59:34 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -32,7 +32,52 @@ CREATE TABLE [dbo].[Country](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Pages]    Script Date: 2025-06-02 5:41:19 PM ******/
+/****** Object:  Table [dbo].[Emails]    Script Date: 2025-06-10 5:59:34 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Emails](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[SentTime] [datetime] NULL,
+	[ReceivedTime] [datetime] NULL,
+	[FromEmail] [nvarchar](255) NULL,
+	[ToEmail] [nvarchar](255) NULL,
+	[Subject] [nvarchar](max) NULL,
+	[Body] [nvarchar](max) NULL,
+	[AttachmentNames] [nvarchar](max) NULL,
+	[IsDeleted] [bit] NULL,
+	[IsArchived] [bit] NULL,
+	[IsStarred] [bit] NULL,
+	[Label] [nvarchar](100) NULL,
+	[Folder] [nvarchar](100) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[InboxEmails]    Script Date: 2025-06-10 5:59:34 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[InboxEmails](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ReceivedTime] [datetime] NOT NULL,
+	[FromEmail] [nvarchar](max) NULL,
+	[ToEmail] [nvarchar](max) NULL,
+	[Subject] [nvarchar](500) NULL,
+	[Body] [nvarchar](max) NULL,
+	[AttachmentNames] [nvarchar](1000) NULL,
+	[MessageId] [nvarchar](255) NULL,
+ CONSTRAINT [PK__InboxEma__3214EC07224E3AFE] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Pages]    Script Date: 2025-06-10 5:59:34 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -49,7 +94,7 @@ CREATE TABLE [dbo].[Pages](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Permissions]    Script Date: 2025-06-02 5:41:19 PM ******/
+/****** Object:  Table [dbo].[Permissions]    Script Date: 2025-06-10 5:59:34 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -70,7 +115,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Roles]    Script Date: 2025-06-02 5:41:19 PM ******/
+/****** Object:  Table [dbo].[Roles]    Script Date: 2025-06-10 5:59:34 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -89,7 +134,26 @@ CREATE TABLE [dbo].[Roles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[State]    Script Date: 2025-06-02 5:41:19 PM ******/
+/****** Object:  Table [dbo].[SentEmails]    Script Date: 2025-06-10 5:59:34 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SentEmails](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[SentTime] [datetime] NOT NULL,
+	[FromEmail] [nvarchar](255) NOT NULL,
+	[ToEmail] [nvarchar](255) NOT NULL,
+	[Subject] [nvarchar](500) NOT NULL,
+	[Body] [nvarchar](max) NOT NULL,
+	[AttachmentNames] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[State]    Script Date: 2025-06-10 5:59:34 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -105,7 +169,7 @@ CREATE TABLE [dbo].[State](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 2025-06-02 5:41:19 PM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 2025-06-10 5:59:34 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -130,7 +194,15 @@ CREATE TABLE [dbo].[Users](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+ALTER TABLE [dbo].[Emails] ADD  DEFAULT ((0)) FOR [IsDeleted]
+GO
+ALTER TABLE [dbo].[Emails] ADD  DEFAULT ((0)) FOR [IsArchived]
+GO
+ALTER TABLE [dbo].[Emails] ADD  DEFAULT ((0)) FOR [IsStarred]
+GO
 ALTER TABLE [dbo].[Permissions] ADD  DEFAULT ((0)) FOR [HasPermission]
+GO
+ALTER TABLE [dbo].[SentEmails] ADD  DEFAULT (getdate()) FOR [SentTime]
 GO
 ALTER TABLE [dbo].[City]  WITH CHECK ADD  CONSTRAINT [FK__City__CountryId__1BC821DD] FOREIGN KEY([CountryId])
 REFERENCES [dbo].[Country] ([Id])
