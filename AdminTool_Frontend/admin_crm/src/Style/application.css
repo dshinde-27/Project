@@ -240,11 +240,12 @@
 }
 
 .email-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: 90vh;
-  overflow: auto;
+display: flex;
+flex-direction: column;
+gap: 10px;
+height: 80vh;
+overflow: auto;
+border-top: 2px solid #ccc;
 }
 
 .email-card {
@@ -436,4 +437,101 @@
 
 .email-card-clickable:hover {
   background-color: #f0f0f0;
+}
+
+.email-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.email-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.email-toolbar span {
+  font-weight: 500;
+}
+
+.toolbar-btn {
+  border: none;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+  background-color: none;
+  border: none;
+  /* color: #333; */
+  display: flex;
+  background: none;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.toolbar-btn:hover {
+  filter: brightness(0.95);
+  background-color: none;
+}
+
+.toolbar-btn svg {
+  font-size: 18px;
+}
+
+.toolbar-btn.delete:hover,.toolbar-btn.spam:hover { background-color: none; color: #f44336; }  
+.toolbar-btn.archive:hover { background-color: none; color: #607d8b; }
+.toolbar-btn.star:hover,.toolbar-btn.move:hover { background-color: none; color: #ffc107; }  
+.toolbar-btn.unstar:hover { background-color: none; color: #000000; }
+.toolbar-btn.label:hover {background-color: none; color: #3f51b5;}
+
+.pagination {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    gap: 12px;
+    padding: 12px;
+    margin-top: -65px;
+    font-size: 16px;
+    border-radius: 0 0 8px 8px;
+}
+
+.pagination button {
+    background-color: none;
+    color: none;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-weight: 500;
+    background: none;
+    font-size: 20px;
+}
+
+.pagination button:hover:not(:disabled) {
+    background-color: none;
+    color: #0056b3;
+    border: none;
+    background: none;
+}
+
+.pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    background-color: none;
+    color: none;
+    border: none;
+    background: none;
+}
+
+.pagination span {
+font-weight: 500;
+color: #333;
+margin-bottom: 13px;
+font-size: 16px;
 }
