@@ -1,0 +1,31 @@
+﻿Installing assembly 'C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.exe
+   logfile = C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.InstallLog
+Rolling back assembly 'C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.exe
+   logfile = C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.InstallLog
+Installing assembly 'C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.exe
+   logfile = C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.InstallLog
+Installing service ReceivedMailService...
+Service ReceivedMailService has been successfully installed.
+Creating EventLog source ReceivedMailService in log Application...
+Committing assembly 'C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.exe
+   logfile = C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.InstallLog
+Uninstalling assembly 'C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.exe
+   logfile = C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\Recevied_Mail.InstallLog
+Removing EventLog source ReceivedMailService.
+Service ReceivedMailService is being removed from the system...
+Service ReceivedMailService was successfully removed from the system.

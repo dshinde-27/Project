@@ -5,6 +5,7 @@ namespace CRM_Api.Helpers
 {
     public class SqlHelper
     {
+        private const int CommandTimeoutSeconds = 60;
         private static string GetConnectionString()
         {
             var configuration = new ConfigurationBuilder()
@@ -88,21 +89,22 @@ namespace CRM_Api.Helpers
             return cmd.ExecuteScalar();
         }
 
-        public static DataSet ExecuteDatasetCommand(string connectionString, CommandType commandType, string commandText, params SqlParameter[] parameters)
+        public static DataSet ExecuteDatasetCommand(string connectionString, CommandType commandType, string query, params SqlParameter[] parameters)
         {
-            using (var conn = new SqlConnection(connectionString))
-            using (var cmd = new SqlCommand(commandText, conn))
+            using var conn = new SqlConnection(connectionString);
+            using var cmd = new SqlCommand(query, conn)
             {
-                cmd.CommandType = commandType;
+                CommandType = commandType,
+                CommandTimeout = CommandTimeoutSeconds
+            };
 
-                if (parameters != null)
-                    cmd.Parameters.AddRange(parameters);
+            if (parameters != null && parameters.Length > 0)
+                cmd.Parameters.AddRange(parameters);
 
-                var adapter = new SqlDataAdapter(cmd);
-                var ds = new DataSet();
-                adapter.Fill(ds);
-                return ds;
-            }
+            using var adapter = new SqlDataAdapter(cmd);
+            var ds = new DataSet();
+            adapter.Fill(ds);
+            return ds;
         }
 
         public static DataSet ExecuteDataSet(string qry)

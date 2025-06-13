@@ -31,3 +31,8 @@ C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevie
 C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\obj\Debug\Recevied.766AC970.Up2Date
 C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\obj\Debug\Recevied_Mail.exe
 C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\obj\Debug\Recevied_Mail.pdb
+C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\System.Configuration.ConfigurationManager.dll
+C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\System.Configuration.ConfigurationManager.xml
+C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\NLog.config
+C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\NLog.dll
+C:\Users\DEVNEW\Desktop\React\Sample\Project\Recevied_Mail\Recevied_Mail\Recevied_Mail\bin\Debug\NLog.xml

@@ -7,7 +7,11 @@
       "RelativeMoniker": "D:0:0:{5D06651F-FA41-4E4A-950E-05DA3A233309}|Recevied_Mail\\Recevied_Mail.csproj|solutionrelative:recevied_mail\\service1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D06651F-FA41-4E4A-950E-05DA3A233309}|Recevied_Mail\\Recevied_Mail.csproj|c:\\users\\devnew\\desktop\\react\\sample\\project\\recevied_mail\\recevied_mail\\recevied_mail\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "AbsoluteMoniker": "D:0:0:{5D06651F-FA41-4E4A-950E-05DA3A233309}|Recevied_Mail\\Recevied_Mail.csproj|C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\recevied_mail\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D06651F-FA41-4E4A-950E-05DA3A233309}|Recevied_Mail\\Recevied_Mail.csproj|solutionrelative:recevied_mail\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D06651F-FA41-4E4A-950E-05DA3A233309}|Recevied_Mail\\Recevied_Mail.csproj|C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\recevied_mail\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{5D06651F-FA41-4E4A-950E-05DA3A233309}|Recevied_Mail\\Recevied_Mail.csproj|solutionrelative:recevied_mail\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
@@ -17,6 +21,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{5D06651F-FA41-4E4A-950E-05DA3A233309}|Recevied_Mail\\Recevied_Mail.csproj|C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\recevied_mail\\projectinstaller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5D06651F-FA41-4E4A-950E-05DA3A233309}|Recevied_Mail\\Recevied_Mail.csproj|solutionrelative:recevied_mail\\projectinstaller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D06651F-FA41-4E4A-950E-05DA3A233309}|Recevied_Mail\\Recevied_Mail.csproj|C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\recevied_mail\\nlog.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{5D06651F-FA41-4E4A-950E-05DA3A233309}|Recevied_Mail\\Recevied_Mail.csproj|solutionrelative:recevied_mail\\nlog.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5D06651F-FA41-4E4A-950E-05DA3A233309}|Recevied_Mail\\Recevied_Mail.csproj|C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\recevied_mail\\service1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
@@ -30,36 +38,60 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "NLog.config",
+              "DocumentMoniker": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\Recevied_Mail\\NLog.config",
+              "RelativeDocumentMoniker": "Recevied_Mail\\NLog.config",
+              "ToolTip": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\Recevied_Mail\\NLog.config",
+              "RelativeToolTip": "Recevied_Mail\\NLog.config",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACYAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-06-11T06:00:56.734Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\Recevied_Mail\\Program.cs",
+              "RelativeDocumentMoniker": "Recevied_Mail\\Program.cs",
+              "ToolTip": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\Recevied_Mail\\Program.cs",
+              "RelativeToolTip": "Recevied_Mail\\Program.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAIwBYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T05:01:19.303Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "App.config",
               "DocumentMoniker": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\Recevied_Mail\\App.config",
               "RelativeDocumentMoniker": "Recevied_Mail\\App.config",
               "ToolTip": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\Recevied_Mail\\App.config",
               "RelativeToolTip": "Recevied_Mail\\App.config",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-06-10T11:57:17.235Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-10T11:57:17.235Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ProjectInstaller.cs",
               "DocumentMoniker": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\Recevied_Mail\\ProjectInstaller.cs",
               "RelativeDocumentMoniker": "Recevied_Mail\\ProjectInstaller.cs",
               "ToolTip": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\Recevied_Mail\\ProjectInstaller.cs",
               "RelativeToolTip": "Recevied_Mail\\ProjectInstaller.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBIAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-10T08:48:06.24Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ProjectInstaller.cs [Design]",
               "DocumentMoniker": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\Recevied_Mail\\ProjectInstaller.cs",
               "RelativeDocumentMoniker": "Recevied_Mail\\ProjectInstaller.cs",
@@ -76,22 +108,21 @@
               "RelativeDocumentMoniker": "Recevied_Mail\\Service1.cs",
               "ToolTip": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\Recevied_Mail\\Service1.cs",
               "RelativeToolTip": "Recevied_Mail\\Service1.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAA9wAMAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAJoAAAAAAAAAAAAUwNUAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-10T08:47:54.628Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "Service1.cs [Design]",
               "DocumentMoniker": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\Recevied_Mail\\Service1.cs",
               "RelativeDocumentMoniker": "Recevied_Mail\\Service1.cs",
               "ToolTip": "C:\\Users\\DEVNEW\\Desktop\\React\\Sample\\Project\\Recevied_Mail\\Recevied_Mail\\Recevied_Mail\\Service1.cs [Design]",
               "RelativeToolTip": "Recevied_Mail\\Service1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T08:47:48.162Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-06-10T08:47:48.162Z"
             }
           ]
         }
