@@ -15,7 +15,7 @@ const PAGE_SIZE = 30;
 const API_BASE = 'https://localhost:7210/api/Email'; // Change if deployed
 
 function Inbox() {
-       const username = localStorage.getItem("username") || localStorage.getItem("email") || "Unknown User";
+    const username = localStorage.getItem("username") || localStorage.getItem("email") || "Unknown User";
     const email = localStorage.getItem("email") || "unknown@gmail.com";
 
     const [isComposeOpen, setIsComposeOpen] = useState(false);
@@ -75,8 +75,8 @@ function Inbox() {
         Promise.all(selectedEmails.map(id =>
             fetch(`${API_BASE}/${endpointSuffix}/${id}`, { method })
         ))
-        .then(() => fetchEmails())
-        .catch(err => console.error(`Error performing ${endpointSuffix}`, err));
+            .then(() => fetchEmails())
+            .catch(err => console.error(`Error performing ${endpointSuffix}`, err));
     };
 
     const handleMoveToFolder = (folderName) => {
@@ -85,8 +85,8 @@ function Inbox() {
                 method: 'POST',
             })
         ))
-        .then(() => fetchEmails())
-        .catch(err => console.error("Error moving emails:", err));
+            .then(() => fetchEmails())
+            .catch(err => console.error("Error moving emails:", err));
     };
 
     const handleLabelEmail = (labelName) => {
@@ -95,8 +95,8 @@ function Inbox() {
                 method: 'POST',
             })
         ))
-        .then(() => fetchEmails())
-        .catch(err => console.error("Error labeling emails:", err));
+            .then(() => fetchEmails())
+            .catch(err => console.error("Error labeling emails:", err));
     };
 
     const paginatedEmails = emails.slice(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE);
