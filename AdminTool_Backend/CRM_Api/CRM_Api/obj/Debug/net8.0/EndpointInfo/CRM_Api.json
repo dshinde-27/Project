@@ -91,98 +91,8 @@
         }
       }
     },
-    "/api/Email/sync-inbox": {
-      "post": {
-        "tags": [
-          "Email"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Email/{id}": {
       "get": {
-        "tags": [
-          "Email"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Email"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Email/folder/{folderName}": {
-      "get": {
-        "tags": [
-          "Email"
-        ],
-        "parameters": [
-          {
-            "name": "folderName",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Email/folders": {
-      "get": {
-        "tags": [
-          "Email"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Email/archive/{id}": {
-      "post": {
         "tags": [
           "Email"
         ],
@@ -250,7 +160,54 @@
         }
       }
     },
-    "/api/Email/move/{id}": {
+    "/api/Email/starred": {
+      "get": {
+        "tags": [
+          "Email"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Email/Delete/{id}": {
+      "delete": {
+        "tags": [
+          "Email"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Email/Delete": {
+      "delete": {
+        "tags": [
+          "Email"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Email/archive/{id}": {
       "post": {
         "tags": [
           "Email"
@@ -264,14 +221,19 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "folder",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Email/archived": {
+      "get": {
+        "tags": [
+          "Email"
         ],
         "responses": {
           "200": {
@@ -310,30 +272,6 @@
         }
       }
     },
-    "/api/Email/archived": {
-      "get": {
-        "tags": [
-          "Email"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Email/starred": {
-      "get": {
-        "tags": [
-          "Email"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Email/label/{label}": {
       "get": {
         "tags": [
@@ -344,6 +282,36 @@
             "name": "label",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Email/move/{id}": {
+      "post": {
+        "tags": [
+          "Email"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "folder",
+            "in": "query",
             "schema": {
               "type": "string"
             }

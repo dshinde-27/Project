@@ -33,22 +33,6 @@
   },
   {
     "ContainingType": "CRM_Api.Controllers.EmailController",
-    "Method": "DeleteEmail",
-    "RelativePath": "api/Email/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CRM_Api.Controllers.EmailController",
     "Method": "ArchiveEmail",
     "RelativePath": "api/Email/archive/{id}",
     "HttpMethod": "POST",
@@ -75,28 +59,28 @@
   },
   {
     "ContainingType": "CRM_Api.Controllers.EmailController",
-    "Method": "GetEmailsFromFolder",
-    "RelativePath": "api/Email/folder/{folderName}",
-    "HttpMethod": "GET",
+    "Method": "AllDeleteEmail",
+    "RelativePath": "api/Email/Delete",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "folderName",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
     "ContainingType": "CRM_Api.Controllers.EmailController",
-    "Method": "GetAvailableFolders",
-    "RelativePath": "api/Email/folders",
-    "HttpMethod": "GET",
+    "Method": "DeleteEmail",
+    "RelativePath": "api/Email/Delete/{id}",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -214,16 +198,6 @@
     "Method": "GetStarredEmails",
     "RelativePath": "api/Email/starred",
     "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CRM_Api.Controllers.EmailController",
-    "Method": "SyncInbox",
-    "RelativePath": "api/Email/sync-inbox",
-    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [],

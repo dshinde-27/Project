@@ -8,6 +8,7 @@ using System.Data;
 using MailKit.Search;
 using MailKit.Net.Imap;
 using MailKit;
+using Org.BouncyCastle.Asn1.X509;
 
 namespace CRM_Api.Controllers
 {
@@ -143,7 +144,7 @@ namespace CRM_Api.Controllers
 
                 string query = @"
                     SELECT Id, ReceivedTime, FromEmail, ToEmail, Subject, Body, AttachmentNames
-                    FROM InboxEmails
+                    FROM Emails where IsDeleted = 0
                     ORDER BY ReceivedTime DESC";
 
                 DataSet ds = SqlHelper.ExecuteDatasetCommand(connectionString, CommandType.Text, query);
@@ -172,85 +173,6 @@ namespace CRM_Api.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error retrieving inbox emails: {ex.Message}");
-            }
-        }
-
-        private void SyncInboxFromMailServer()
-        {
-            string senderEmail = _configuration["Smtp:SenderEmail"];
-            string senderPassword = _configuration["Smtp:SenderPassword"];
-            string connectionString = _configuration.GetConnectionString("Connection");
-
-            using var client = new ImapClient();
-            client.Connect("imap.gmail.com", 993, true);
-            client.Authenticate(senderEmail, senderPassword);
-
-            var inbox = client.Inbox;
-            inbox.Open(MailKit.FolderAccess.ReadOnly);
-
-            foreach (var uid in inbox.Search(SearchQuery.All))
-            {
-                var message = inbox.GetMessage(uid);
-                var messageId = message.MessageId ?? Guid.NewGuid().ToString();
-
-                // Check for duplicates in InboxEmails
-                int existingCount = 0;
-                using (var conn = new SqlConnection(connectionString))
-                using (var cmd = new SqlCommand("SELECT COUNT(*) FROM InboxEmails WHERE MessageId = @MessageId", conn))
-                {
-                    cmd.Parameters.AddWithValue("@MessageId", messageId);
-                    conn.Open();
-                    existingCount = (int)cmd.ExecuteScalar();
-                }
-
-                if (existingCount > 0)
-                    continue;
-
-                // Insert into InboxEmails
-                SqlHelper.ExecuteNonQueryWithParam(
-                    connectionString,
-                    @"INSERT INTO InboxEmails (MessageId, ReceivedTime, FromEmail, ToEmail, Subject, Body)
-                    VALUES (@MessageId, @ReceivedTime, @FromEmail, @ToEmail, @Subject, @Body)",
-                    new SqlParameter("@MessageId", messageId),
-                    new SqlParameter("@ReceivedTime", message.Date.DateTime),
-                    new SqlParameter("@FromEmail", message.From.ToString()),
-                    new SqlParameter("@ToEmail", message.To.ToString()),
-                    new SqlParameter("@Subject", message.Subject),
-                    new SqlParameter("@Body", message.TextBody ?? "")
-                );
-
-                // Insert into Emails table
-                SqlHelper.ExecuteNonQueryWithParam(
-                    connectionString,
-                    @"INSERT INTO Emails (SentTime, ReceivedTime, FromEmail, ToEmail, Subject, Body, AttachmentNames, IsDeleted, IsArchived, IsStarred, Label, Folder)
-                    VALUES (@SentTime, @ReceivedTime, @FromEmail, @ToEmail, @Subject, @Body, @AttachmentNames, 0, 0, 0, NULL, 'Inbox')",
-                    new SqlParameter("@SentTime", DBNull.Value), 
-                    new SqlParameter("@ReceivedTime", message.Date.DateTime),
-                    new SqlParameter("@FromEmail", message.From.ToString()),
-                    new SqlParameter("@ToEmail", message.To.ToString()),
-                    new SqlParameter("@Subject", message.Subject),
-                    new SqlParameter("@Body", message.TextBody ?? ""),
-                    new SqlParameter("@AttachmentNames", string.Join(", ", message.Attachments.Select(a => a.ContentDisposition?.FileName ?? "Unnamed")))
-                );
-            }
-
-            client.Disconnect(true);
-        }
-
-
-
-        [HttpPost("sync-inbox")]
-        public IActionResult SyncInbox()
-        {
-
-            try
-            {
-                SyncInboxFromMailServer();
-                return Ok("Inbox synced.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Failed to sync inbox: {ex.Message}");
             }
         }
 
@@ -298,120 +220,62 @@ namespace CRM_Api.Controllers
             }
         }
 
-
-        private IList<SentEmail> FetchEmailsFromFolder(string folderName)
+        [HttpPost("star/{id}")]
+        public IActionResult StarEmail(int id)
         {
-            var emailList = new List<SentEmail>();
-
-            string senderEmail = _configuration["Smtp:SenderEmail"];
-            string senderPassword = _configuration["Smtp:SenderPassword"];
-
-            using var client = new ImapClient();
-            client.Connect("imap.gmail.com", 993, true);
-            client.Authenticate(senderEmail, senderPassword);
-
-            // ✅ This line now works with full folder names like [Gmail]/Sent Mail
-            var targetFolder = client.GetFolder(folderName);
-
-            if (targetFolder == null)
-                throw new Exception($"Folder '{folderName}' not found on the server.");
-
-            targetFolder.Open(FolderAccess.ReadOnly);
-
-            var uids = targetFolder.Search(SearchQuery.All);
-            foreach (var uid in uids.Reverse().Take(20))
-            {
-                var message = targetFolder.GetMessage(uid);
-                emailList.Add(new SentEmail
-                {
-                    SentTime = message.Date.DateTime,
-                    FromEmail = message.From.ToString(),
-                    ToEmail = message.To.ToString(),
-                    Subject = message.Subject,
-                    Body = message.TextBody ?? message.HtmlBody ?? "(No content)",
-                    AttachmentNames = string.Join(", ", message.Attachments.Select(a => a.ContentDisposition?.FileName ?? a.ContentType.Name))
-                });
-            }
-
-            client.Disconnect(true);
-            return emailList;
+            return ToggleBooleanFlag(id, "IsStarred", true, "Email starred.");
         }
 
-        [HttpGet("folder/{*folderName}")]
-        public IActionResult GetEmailsFromFolder(string folderName)
+        [HttpPost("unstar/{id}")]
+        public IActionResult UnstarEmail(int id)
+        {
+            return ToggleBooleanFlag(id, "IsStarred", false, "Email unstarred.");
+        }
+
+        [HttpGet("starred")]
+        public IActionResult GetStarredEmails()
+        {
+            string conn = _configuration.GetConnectionString("Connection");
+            string query = "SELECT Id, SentTime, FromEmail, ToEmail, Subject, Body, AttachmentNames, IsStarred FROM Emails WHERE IsStarred = 1 ORDER BY ReceivedTime DESC";
+
+            var ds = SqlHelper.ExecuteDatasetCommand(conn, CommandType.Text, query);
+            var table = ds.Tables[0];
+
+            var emails = table.AsEnumerable().Select(row => new SentEmail
+            {
+                Id = row.Field<int>("Id"),
+                SentTime = row.Field<DateTime>("SentTime"),
+                FromEmail = row.Field<string>("FromEmail"),
+                ToEmail = row.Field<string>("ToEmail"),
+                Subject = row.Field<string>("Subject"),
+                Body = row.Field<string>("Body"),
+                AttachmentNames = row.Field<string?>("AttachmentNames"),
+                IsStarred = row.Field<bool>("IsStarred")
+            }).ToList();
+
+            return Ok(emails);
+        }
+
+        private IActionResult ToggleBooleanFlag(int id, string column, bool value, string message)
         {
             try
             {
-                // Decode the folder name from URL format to plain text
-                string decodedFolderName = Uri.UnescapeDataString(folderName);
+                string conn = _configuration.GetConnectionString("Connection");
+                string query = $"UPDATE Emails SET {column} = @value WHERE Id = @Id";
 
-                // Example: decodedFolderName = "[Gmail]/Sent Mail"
+                SqlHelper.ExecuteNonQueryWithParam(conn, query,
+                    new SqlParameter("@value", value),
+                    new SqlParameter("@Id", id));
 
-                using var client = new ImapClient();
-                var email = _configuration["Smtp:SenderEmail"];
-                var password = _configuration["Smtp:SenderPassword"];
-
-                client.Connect("imap.gmail.com", 993, true);
-                client.Authenticate(email, password);
-
-                var folder = client.GetFolder(decodedFolderName);
-                folder.Open(FolderAccess.ReadOnly);
-
-                var uids = folder.Search(SearchQuery.All);
-                var emails = new List<object>();
-
-                foreach (var uid in uids.Reverse().Take(10)) // get last 10 for brevity
-                {
-                    var message = folder.GetMessage(uid);
-                    emails.Add(new
-                    {
-                        From = message.From.ToString(),
-                        To = message.To.ToString(),
-                        Subject = message.Subject,
-                        Body = message.TextBody,
-                        Date = message.Date.DateTime
-                    });
-                }
-
-                client.Disconnect(true);
-                return Ok(emails);
-            }
-            catch (FolderNotFoundException)
-            {
-                return NotFound($"Folder '{folderName}' not found on the server.");
+                return Ok(message);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error retrieving emails from '{folderName}': {ex.Message}");
+                return StatusCode(500, $"Error updating {column}: {ex.Message}");
             }
         }
 
-        [HttpGet("folders")]
-        public IActionResult GetAvailableFolders()
-        {
-            try
-            {
-                string senderEmail = _configuration["Smtp:SenderEmail"];
-                string senderPassword = _configuration["Smtp:SenderPassword"];
-
-                using var client = new ImapClient();
-                client.Connect("imap.gmail.com", 993, true);
-                client.Authenticate(senderEmail, senderPassword);
-
-                var folders = client.GetFolders(client.PersonalNamespaces[0])
-                    .Select(f => f.FullName)
-                    .ToList();
-
-                client.Disconnect(true);
-                return Ok(folders);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Failed to retrieve folders: {ex.Message}");
-            }
-        }
-
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         public IActionResult DeleteEmail(int id)
         {
             try
@@ -420,6 +284,23 @@ namespace CRM_Api.Controllers
                 string query = "UPDATE Emails SET IsDeleted = 1 WHERE Id = @Id";
 
                 SqlHelper.ExecuteNonQueryWithParam(conn, query, new SqlParameter("@Id", id));
+                return Ok("Email marked as deleted.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error deleting email: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("Delete")]
+        public IActionResult AllDeleteEmail()
+        {
+            try
+            {
+                string conn = _configuration.GetConnectionString("Connection");
+                string query = "Select Emails SET IsDeleted = 1 ";
+
+                SqlHelper.ExecuteNonQueryWithParam(conn, query);
                 return Ok("Email marked as deleted.");
             }
             catch (Exception ex)
@@ -445,55 +326,14 @@ namespace CRM_Api.Controllers
             }
         }
 
-        [HttpPost("star/{id}")]
-        public IActionResult StarEmail(int id)
+        [HttpGet("archived")]
+        public IActionResult GetArchivedEmails()
         {
-            return ToggleBooleanFlag(id, "IsStarred", true, "Email starred.");
-        }
+            string conn = _configuration.GetConnectionString("Connection");
+            string query = "SELECT * FROM Emails WHERE IsArchived = 1 AND IsDeleted = 0";
 
-        [HttpPost("unstar/{id}")]
-        public IActionResult UnstarEmail(int id)
-        {
-            return ToggleBooleanFlag(id, "IsStarred", false, "Email unstarred.");
-        }
-
-        private IActionResult ToggleBooleanFlag(int id, string column, bool value, string message)
-        {
-            try
-            {
-                string conn = _configuration.GetConnectionString("Connection");
-                string query = $"UPDATE Emails SET {column} = @value WHERE Id = @Id";
-
-                SqlHelper.ExecuteNonQueryWithParam(conn, query,
-                    new SqlParameter("@value", value),
-                    new SqlParameter("@Id", id));
-
-                return Ok(message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error updating {column}: {ex.Message}");
-            }
-        }
-
-        [HttpPost("move/{id}")]
-        public IActionResult MoveToFolder(int id, [FromQuery] string folder)
-        {
-            try
-            {
-                string conn = _configuration.GetConnectionString("Connection");
-                string query = "UPDATE Emails SET Folder = @Folder WHERE Id = @Id";
-
-                SqlHelper.ExecuteNonQueryWithParam(conn, query,
-                    new SqlParameter("@Folder", folder),
-                    new SqlParameter("@Id", id));
-
-                return Ok($"Email moved to folder '{folder}'.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error moving email: {ex.Message}");
-            }
+            var ds = SqlHelper.ExecuteDatasetCommand(conn, CommandType.Text, query);
+            return Ok(ds.Tables[0]);
         }
 
         [HttpPost("label/{id}")]
@@ -516,26 +356,6 @@ namespace CRM_Api.Controllers
             }
         }
 
-        [HttpGet("archived")]
-        public IActionResult GetArchivedEmails()
-        {
-            string conn = _configuration.GetConnectionString("Connection");
-            string query = "SELECT * FROM Emails WHERE IsArchived = 1 AND IsDeleted = 0";
-
-            var ds = SqlHelper.ExecuteDatasetCommand(conn, CommandType.Text, query);
-            return Ok(ds.Tables[0]);
-        }
-
-        [HttpGet("starred")]
-        public IActionResult GetStarredEmails()
-        {
-            string conn = _configuration.GetConnectionString("Connection");
-            string query = "SELECT * FROM Emails WHERE IsStarred = 1 AND IsDeleted = 0";
-
-            var ds = SqlHelper.ExecuteDatasetCommand(conn, CommandType.Text, query);
-            return Ok(ds.Tables[0]);
-        }
-
         [HttpGet("label/{label}")]
         public IActionResult GetLabeledEmails(string label)
         {
@@ -547,6 +367,25 @@ namespace CRM_Api.Controllers
             return Ok(ds.Tables[0]);
         }
 
+        [HttpPost("move/{id}")]
+        public IActionResult MoveToFolder(int id, [FromQuery] string folder)
+        {
+            try
+            {
+                string conn = _configuration.GetConnectionString("Connection");
+                string query = "UPDATE Emails SET Folder = @Folder WHERE Id = @Id";
+
+                SqlHelper.ExecuteNonQueryWithParam(conn, query,
+                    new SqlParameter("@Folder", folder),
+                    new SqlParameter("@Id", id));
+
+                return Ok($"Email moved to folder '{folder}'.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error moving email: {ex.Message}");
+            }
+        }
 
     }
 }
