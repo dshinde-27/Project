@@ -22,13 +22,18 @@ namespace CRM_Api.Models
     public class SentEmail
     {
         public int Id { get; set; }
-        public DateTime SentTime { get; set; }
         public string FromEmail { get; set; }
         public string ToEmail { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
+        public DateTime? SentTime { get; set; }
+        public DateTime? ReceivedTime { get; set; }
         public string? AttachmentNames { get; set; }
-        public bool IsStarred { get; set; } 
+        public bool IsStarred { get; set; }
+        public bool IsDeleted { get; set; }
+        public bool IsRead { get; set; } // ← Add this
     }
+
+
 
 }

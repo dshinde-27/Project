@@ -158,7 +158,7 @@ namespace CRM_Api.Helpers
             await conn.OpenAsync();
             return await cmd.ExecuteNonQueryAsync();
         }
-        public static DataTable ExecuteDataTable(string query, SqlParameter[] parameters = null)
+        public static DataTable ExecuteDataTable(string query, string connectionString, SqlParameter[] parameters = null)
         {
             using SqlConnection conn = new(GetConnectionString());
             using SqlCommand cmd = new(query, conn);

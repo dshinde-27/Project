@@ -195,8 +195,8 @@
         }
       }
     },
-    "/api/Email/Delete": {
-      "delete": {
+    "/api/Email/Deleted": {
+      "get": {
         "tags": [
           "Email"
         ],
@@ -314,6 +314,48 @@
             "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "rule",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Email/email-domains": {
+      "get": {
+        "tags": [
+          "Email"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Email/markasread/{id}": {
+      "post": {
+        "tags": [
+          "Email"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],

@@ -144,7 +144,7 @@ namespace CRM_Api.Controllers
 
                 string query = @"
                     SELECT Id, ReceivedTime, FromEmail, ToEmail, Subject, Body, AttachmentNames
-                    FROM Emails where IsDeleted = 0
+                    FROM Emails where IsDeleted = 0 and IsArchived = 0
                     ORDER BY ReceivedTime DESC";
 
                 DataSet ds = SqlHelper.ExecuteDatasetCommand(connectionString, CommandType.Text, query);
@@ -292,20 +292,38 @@ namespace CRM_Api.Controllers
             }
         }
 
-        [HttpDelete("Delete")]
-        public IActionResult AllDeleteEmail()
+        [HttpGet("Deleted")]
+        public IActionResult GetDeletedEmails()
         {
             try
             {
-                string conn = _configuration.GetConnectionString("Connection");
-                string query = "Select Emails SET IsDeleted = 1 ";
+                string query = "SELECT * FROM Emails WHERE IsDeleted = 1";
+                DataTable dt = SqlHelper.ExecuteDataTable(query,null);
 
-                SqlHelper.ExecuteNonQueryWithParam(conn, query);
-                return Ok("Email marked as deleted.");
+                // Convert DataTable to a list of objects (you'll need a model class)
+                var emails = new List<SentEmail>();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    emails.Add(new SentEmail
+                    {
+                        Id = Convert.ToInt32(row["Id"]),
+                        FromEmail = row["FromEmail"].ToString(),
+                        ToEmail = row["ToEmail"].ToString(),
+                        Subject = row["Subject"].ToString(),
+                        Body = row["Body"].ToString(),
+                        SentTime = row["SentTime"] != DBNull.Value ? Convert.ToDateTime(row["SentTime"]) : (DateTime?)null,
+                        ReceivedTime = row["ReceivedTime"] != DBNull.Value ? Convert.ToDateTime(row["ReceivedTime"]) : (DateTime?)null,
+                        IsStarred = Convert.ToBoolean(row["IsStarred"]),
+                        IsDeleted = Convert.ToBoolean(row["IsDeleted"])
+                    });
+                }
+
+                return Ok(emails);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error deleting email: {ex.Message}");
+                return StatusCode(500, $"Error retrieving deleted emails: {ex.Message}");
             }
         }
 
@@ -329,12 +347,41 @@ namespace CRM_Api.Controllers
         [HttpGet("archived")]
         public IActionResult GetArchivedEmails()
         {
-            string conn = _configuration.GetConnectionString("Connection");
-            string query = "SELECT * FROM Emails WHERE IsArchived = 1 AND IsDeleted = 0";
+            try
+            {
+                string conn = _configuration.GetConnectionString("Connection");
+                string query = "SELECT * FROM Emails WHERE IsArchived = 1 AND IsDeleted = 0";
 
-            var ds = SqlHelper.ExecuteDatasetCommand(conn, CommandType.Text, query);
-            return Ok(ds.Tables[0]);
+                var ds = SqlHelper.ExecuteDatasetCommand(conn, CommandType.Text, query);
+                DataTable dt = ds.Tables[0];
+
+                var emails = new List<SentEmail>();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    emails.Add(new SentEmail
+                    {
+                        Id = Convert.ToInt32(row["Id"]),
+                        FromEmail = row["FromEmail"].ToString(),
+                        ToEmail = row["ToEmail"].ToString(),
+                        Subject = row["Subject"].ToString(),
+                        Body = row["Body"].ToString(),
+                        SentTime = row["SentTime"] != DBNull.Value ? Convert.ToDateTime(row["SentTime"]) : (DateTime?)null,
+                        ReceivedTime = row["ReceivedTime"] != DBNull.Value ? Convert.ToDateTime(row["ReceivedTime"]) : (DateTime?)null,
+                        AttachmentNames = row["AttachmentNames"]?.ToString(),
+                        IsStarred = Convert.ToBoolean(row["IsStarred"]),
+                        IsDeleted = Convert.ToBoolean(row["IsDeleted"])
+                    });
+                }
+
+                return Ok(emails);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error retrieving archived emails: {ex.Message}");
+            }
         }
+
 
         [HttpPost("label/{id}")]
         public IActionResult LabelEmail(int id, [FromQuery] string label)
@@ -368,22 +415,84 @@ namespace CRM_Api.Controllers
         }
 
         [HttpPost("move/{id}")]
-        public IActionResult MoveToFolder(int id, [FromQuery] string folder)
+        public IActionResult MoveToFolder(int id, [FromQuery] string folder, [FromQuery] string rule)
         {
             try
             {
                 string conn = _configuration.GetConnectionString("Connection");
+
+                // Optionally: Extend schema to store rules per email/folder
                 string query = "UPDATE Emails SET Folder = @Folder WHERE Id = @Id";
 
                 SqlHelper.ExecuteNonQueryWithParam(conn, query,
                     new SqlParameter("@Folder", folder),
                     new SqlParameter("@Id", id));
 
-                return Ok($"Email moved to folder '{folder}'.");
+                // Optional: Log or use the rule parameter for future filtering logic
+                Console.WriteLine($"Email ID {id} moved to folder '{folder}' with rule '{rule}'.");
+
+                return Ok($"Email moved to folder '{folder}' with rule '{rule}'.");
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error moving email: {ex.Message}");
+            }
+        }
+
+        [HttpGet("email-domains")]
+        public IActionResult GetEmailDomains()
+        {
+            try
+            {
+                string conn = _configuration.GetConnectionString("Connection");
+
+                string query = @"
+            SELECT DISTINCT 
+                LOWER(SUBSTRING(FromEmail, CHARINDEX('@', FromEmail) + 1, LEN(FromEmail))) AS Domain
+            FROM Emails
+            WHERE FromEmail LIKE '%@%.%'
+
+            UNION
+
+            SELECT DISTINCT 
+                LOWER(SUBSTRING(ToEmail, CHARINDEX('@', ToEmail) + 1, LEN(ToEmail))) AS Domain
+            FROM Emails
+            WHERE ToEmail LIKE '%@%.%'";
+
+                DataTable dt = SqlHelper.ExecuteDataTable(query, conn);
+
+                var domains = dt.AsEnumerable()
+                                .Select(row => row["Domain"].ToString())
+                                .Where(domain => !string.IsNullOrWhiteSpace(domain))
+                                .Distinct()
+                                .OrderBy(d => d)
+                                .ToList();
+
+                return Ok(domains);
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex, "Error retrieving email domains");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+
+
+        [HttpPost("markasread/{id}")]
+        public IActionResult MarkAsRead(int id)
+        {
+            try
+            {
+                string conn = _configuration.GetConnectionString("Connection");
+                string query = "UPDATE Emails SET IsRead = 1 WHERE Id = @Id";
+                SqlParameter[] parameters = { new SqlParameter("@Id", id) };
+
+                SqlHelper.ExecuteNonQueryWithParam(conn, query, parameters);
+                return Ok("Email marked as read.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error marking email as read: {ex.Message}");
             }
         }
 
