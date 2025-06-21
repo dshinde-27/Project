@@ -3,6 +3,7 @@ import '../Style/application.css';
 import Navbar from '../Layout/Navbar';
 import Sidebar from '../Layout/Sidebar';
 import ComposeModal from '../Email/ComposeModal';
+import MoveToFolderModal from '../Email/MoveToFolderModal';
 
 import {
     MdInbox, MdOutlineStar, MdSend, MdDrafts, MdDelete, MdReport,
@@ -30,7 +31,6 @@ function Inbox() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-
     const [inboxCount, setInboxCount] = useState(0);
     const [sentCount, setSentCount] = useState(0);
     const [starredCount, setStarredCount] = useState(0);
@@ -38,34 +38,21 @@ function Inbox() {
     const [trashCount, setTrashCount] = useState(0);
 
     const totalPages = Math.ceil(emails.length / PAGE_SIZE);
+    const [isMoveModalOpen, setIsMoveModalOpen] = useState(false);
 
     useEffect(() => {
         setCurrentPage(0);
+        setSelectedEmails([]); // Clear selected emails on tab switch
         fetchEmails();
     }, [selectedTab]);
 
     useEffect(() => {
-        fetch(`${API_BASE}/inbox`)
-            .then(res => res.json())
-            .then(data => setInboxCount(data.length));
-
-        fetch(`${API_BASE}/sent`)
-            .then(res => res.json())
-            .then(data => setSentCount(data.length));
-
-        fetch(`${API_BASE}/starred`)
-            .then(res => res.json())
-            .then(data => setStarredCount(data.length));
-
-        fetch(`${API_BASE}/archive`)
-            .then(res => res.json())
-            .then(data => setArchiveCount(data.length));
-
-        fetch(`${API_BASE}/delete/`)
-            .then(res => res.json())
-            .then(data => setTrashCount(data.length));
+        fetch(`${API_BASE}/inbox`).then(res => res.json()).then(data => setInboxCount(data.length));
+        fetch(`${API_BASE}/sent`).then(res => res.json()).then(data => setSentCount(data.length));
+        fetch(`${API_BASE}/starred`).then(res => res.json()).then(data => setStarredCount(data.length));
+        fetch(`${API_BASE}/archive`).then(res => res.json()).then(data => setArchiveCount(data.length));
+        fetch(`${API_BASE}/deleted`).then(res => res.json()).then(data => setTrashCount(data.length));
     }, []);
-
 
     useEffect(() => {
         setPaginatedEmails(
@@ -90,7 +77,7 @@ function Inbox() {
         fetch(`${API_BASE}${endpoint}`)
             .then(res => res.json())
             .then(data => {
-                setEmails(data);
+                setEmails(Array.isArray(data) ? data : []);
                 setLoading(false);
             })
             .catch(err => {
@@ -111,10 +98,6 @@ function Inbox() {
     const handleStarEmails = () => performAction("star");
     const handleUnstarEmails = () => performAction("unstar");
 
-    const handleMoveToFolder = (folderName) => {
-        performAction(`move/${folderName}`);
-    };
-
     const handleLabelEmails = () => {
         const label = prompt("Enter label name:");
         if (label) {
@@ -131,7 +114,7 @@ function Inbox() {
             for (const id of selectedEmails) {
                 await fetch(`${API_BASE}/delete/${id}`, { method: 'DELETE' });
             }
-            setEmails(prev => prev.filter(e => !selectedEmails.includes(e.id)));
+            fetchEmails();
             setSelectedEmails([]);
         } catch (error) {
             console.error("Error deleting emails:", error);
@@ -151,6 +134,33 @@ function Inbox() {
 
     const handleSpamEmails = () => {
         alert("Spam functionality not implemented yet.");
+    };
+
+    const handleMoveToFolder = async ({ folderName, rule }) => {
+        try {
+            for (const id of selectedEmails) {
+                await fetch(`${API_BASE}/move/${id}?folder=${encodeURIComponent(folderName)}`, {
+                    method: "POST",
+                });
+            }
+
+            // Optional: Save the rule if provided
+            if (rule) {
+                await fetch(`${API_BASE}/rules`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ domain: rule, folder: folderName })
+                });
+            }
+
+            alert(`${selectedEmails.length} email(s) moved to folder "${folderName}"${rule ? ` with rule "${rule}"` : ""}`);
+            setSelectedEmails([]);
+            fetchEmails();
+        } catch (error) {
+            console.error("Error moving emails:", error);
+        }
     };
 
     return (
@@ -189,38 +199,10 @@ function Inbox() {
                                 <MdDelete /> Trash <span className='count'>{trashCount}</span>
                             </li>
                         </ul>
-
                     </div>
 
                     <div className='email-inbox'>
-                        {selectedEmail ? (
-                            <>
-                                <div className="email-right" onClick={(e) => e.stopPropagation()}>
-                                    <div className="star-icon" onClick={() => {
-                                        const endpoint = selectedEmail.isStarred ? "unstar" : "star";
-                                        fetch(`${API_BASE}/${endpoint}/${selectedEmail.id}`, { method: "POST" })
-                                            .then(() => {
-                                                fetchEmails();
-                                                setSelectedEmail(prev => ({ ...prev, isStarred: !prev.isStarred }));
-                                            });
-                                    }}>
-                                        {selectedEmail.isStarred ? <MdStarFilled color="gold" /> : <MdOutlineStarBorder />}
-                                    </div>
-                                    <span className="timestamp">
-                                        {new Date(selectedEmail.sentTime || selectedEmail.receivedTime).toLocaleString()}
-                                    </span>
-                                </div>
-
-                                <div className="email-detail-card">
-                                    <button className="back-btn" onClick={() => setSelectedEmail(null)}>Back</button>
-                                    <h3>{selectedEmail.subject}</h3>
-                                    <p><strong>From:</strong> {selectedEmail.fromEmail}</p>
-                                    <p><strong>To:</strong> {selectedEmail.toEmail}</p>
-                                    <p><strong>Date:</strong> {new Date(selectedEmail.sentTime || selectedEmail.receivedTime).toLocaleString()}</p>
-                                    <div className="email-body">{selectedEmail.body}</div>
-                                </div>
-                            </>
-                        ) : (
+                        {!selectedEmail ? (
                             <>
                                 <h2>{selectedTab.charAt(0).toUpperCase() + selectedTab.slice(1)} Emails</h2>
 
@@ -238,15 +220,13 @@ function Inbox() {
                                     <div className="email-toolbar">
                                         <span>{selectedEmails.length} selected</span>
                                         <div className="email-actions">
-                                            <button className="toolbar-btn delete" title="Delete" onClick={handleDeleteEmails}><MdDelete /></button>
-                                            <button className="toolbar-btn archive" title="Archive" onClick={handleArchiveEmails}><IoArchive /></button>
-                                            <button className="toolbar-btn read" title="Mark as Read"><MdOutlineMarkEmailRead /></button>
-                                            <button className="toolbar-btn unread" title="Mark as Unread"><MdOutlineMarkunread /></button>
-                                            <button className="toolbar-btn star" title="Star" onClick={handleStarEmails}><MdStarFilled /></button>
-                                            <button className="toolbar-btn unstar" title="Unstar" onClick={handleUnstarEmails}><MdOutlineStarBorder /></button>
-                                            <button className="toolbar-btn spam" title="Spam" onClick={handleSpamEmails}><MdReport /></button>
-                                            <button className="toolbar-btn move" title="Move to Folder"><FaFolderPlus /></button>
-                                            <button className="toolbar-btn label" title="Add Label" onClick={handleLabelEmails}><MdNewLabel /></button>
+                                            <button className="toolbar-btn delete" onClick={handleDeleteEmails} disabled={!selectedEmails.length}><MdDelete /></button>
+                                            <button className="toolbar-btn archive" onClick={handleArchiveEmails} disabled={!selectedEmails.length}><IoArchive /></button>
+                                            <button className="toolbar-btn star" onClick={handleStarEmails} disabled={!selectedEmails.length}><MdStarFilled /></button>
+                                            <button className="toolbar-btn unstar" onClick={handleUnstarEmails} disabled={!selectedEmails.length}><MdOutlineStarBorder /></button>
+                                            <button className="toolbar-btn move" onClick={() => setIsMoveModalOpen(true)} disabled={!selectedEmails.length}><FaFolderPlus /></button>
+                                            <button className="toolbar-btn label" onClick={handleLabelEmails} disabled={!selectedEmails.length}><MdNewLabel /></button>
+                                            <button className="toolbar-btn spam" onClick={handleSpamEmails}><MdReport /></button>
                                         </div>
                                     </div>
                                 )}
@@ -260,8 +240,18 @@ function Inbox() {
                                         {paginatedEmails.map(email => (
                                             <div
                                                 key={email.id}
-                                                className={`email-card ${selectedEmails.includes(email.id) ? 'selected' : ''}`}
-                                                onClick={() => setSelectedEmail(email)}
+                                                className={`email-card ${selectedEmails.includes(email.id) ? 'selected' : ''} ${!email.isRead ? 'unread' : ''}`}
+                                                onClick={() => {
+                                                    setSelectedEmail(email);
+                                                    if (!email.isRead) {
+                                                        fetch(`${API_BASE}/markasread/${email.id}`, { method: "POST" })
+                                                            .then(() => {
+                                                                setEmails(prev =>
+                                                                    prev.map(e => e.id === email.id ? { ...e, isRead: true } : e)
+                                                                );
+                                                            });
+                                                    }
+                                                }}
                                             >
                                                 <div className="email-left" onClick={(e) => e.stopPropagation()}>
                                                     <input
@@ -279,16 +269,19 @@ function Inbox() {
                                                         {(selectedTab === 'inbox' ? email.fromEmail : email.toEmail)?.charAt(0)}
                                                     </div>
                                                     <div className="email-info">
-                                                        <div className="sender">
-                                                            {selectedTab === 'inbox' ? email.fromEmail : email.toEmail}
-                                                        </div>
+                                                        <div className="sender">{selectedTab === 'inbox' ? email.fromEmail : email.toEmail}</div>
                                                         <div className="subject">{email.subject}</div>
                                                         <div className="preview">{email.body?.substring(0, 60)}...</div>
                                                     </div>
                                                 </div>
                                                 <div className="email-right">
                                                     <span className="timestamp">
-                                                        {new Date(email.sentTime || email.receivedTime).toLocaleString()}
+                                                        {new Date(email.sentTime || email.receivedTime).toLocaleString('en-US', {
+                                                            month: 'short',
+                                                            day: 'numeric',
+                                                            hour: '2-digit',
+                                                            minute: '2-digit',
+                                                        })}
                                                     </span>
                                                 </div>
                                             </div>
@@ -296,10 +289,26 @@ function Inbox() {
                                     </div>
                                 )}
                             </>
+                        ) : (
+                            <div className="email-detail-card">
+                                <button className="back-btn" onClick={() => setSelectedEmail(null)}>Back</button>
+                                <h3>{selectedEmail.subject}</h3>
+                                <p><strong>From:</strong> {selectedEmail.fromEmail}</p>
+                                <p><strong>To:</strong> {selectedEmail.toEmail}</p>
+                                <p><strong>Date:</strong> {new Date(selectedEmail.sentTime || selectedEmail.receivedTime).toLocaleString()}</p>
+                                <div className="email-body">{selectedEmail.body}</div>
+                            </div>
                         )}
                     </div>
                 </div>
             </div>
+
+            <MoveToFolderModal
+                isOpen={isMoveModalOpen}
+                onClose={() => setIsMoveModalOpen(false)}
+                onSubmit={handleMoveToFolder}
+            />
+
             <ComposeModal isOpen={isComposeOpen} onClose={() => setIsComposeOpen(false)} />
         </div>
     );
