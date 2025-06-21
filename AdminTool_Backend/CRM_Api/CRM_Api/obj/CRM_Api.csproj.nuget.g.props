@@ -23,5 +23,6 @@
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_Extensions_ApiDescription_Server Condition=" '$(PkgMicrosoft_Extensions_ApiDescription_Server)' == '' ">C:\Users\DEVNEW\.nuget\packages\microsoft.extensions.apidescription.server\6.0.5</PkgMicrosoft_Extensions_ApiDescription_Server>
     <PkgNSwag_MSBuild Condition=" '$(PkgNSwag_MSBuild)' == '' ">C:\Users\DEVNEW\.nuget\packages\nswag.msbuild\13.18.2</PkgNSwag_MSBuild>
+    <PkgNLog_InstallNLogConfig Condition=" '$(PkgNLog_InstallNLogConfig)' == '' ">C:\Users\DEVNEW\.nuget\packages\nlog.installnlogconfig\2.0.0</PkgNLog_InstallNLogConfig>
   </PropertyGroup>
 </Project>

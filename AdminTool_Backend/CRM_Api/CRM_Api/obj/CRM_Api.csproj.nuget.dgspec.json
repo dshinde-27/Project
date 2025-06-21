@@ -73,6 +73,10 @@
               "target": "Package",
               "version": "[6.0.0-rc2, )"
             },
+            "NLog.InstallNLogConfig": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
             "NLog.Web.AspNetCore": {
               "target": "Package",
               "version": "[5.5.0, )"

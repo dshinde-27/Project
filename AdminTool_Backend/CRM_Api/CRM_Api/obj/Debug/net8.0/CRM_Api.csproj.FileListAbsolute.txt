@@ -87,3 +87,4 @@ C:\Users\DEVNEW\Desktop\React\Sample\Project\AdminTool_Backend\CRM_Api\CRM_Api\b
 C:\Users\DEVNEW\Desktop\React\Sample\Project\AdminTool_Backend\CRM_Api\CRM_Api\bin\Debug\net8.0\MailKit.dll
 C:\Users\DEVNEW\Desktop\React\Sample\Project\AdminTool_Backend\CRM_Api\CRM_Api\bin\Debug\net8.0\MimeKit.dll
 C:\Users\DEVNEW\Desktop\React\Sample\Project\AdminTool_Backend\CRM_Api\CRM_Api\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\DEVNEW\Desktop\React\Sample\Project\AdminTool_Backend\CRM_Api\CRM_Api\bin\Debug\net8.0\NLog.config

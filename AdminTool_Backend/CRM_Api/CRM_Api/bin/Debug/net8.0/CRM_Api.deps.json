@@ -13,6 +13,7 @@
           "Microsoft.Extensions.ApiDescription.Client": "7.0.2",
           "NLog": "6.0.0-rc2",
           "NLog.Extensions.Logging": "6.0.0-rc2",
+          "NLog.InstallNLogConfig": "2.0.0",
           "NLog.Web.AspNetCore": "5.5.0",
           "NSwag.ApiDescription.Client": "13.18.2",
           "Newtonsoft.Json": "13.0.1",
@@ -398,6 +399,11 @@
             "assemblyVersion": "6.0.0.0",
             "fileVersion": "6.0.0.666"
           }
+        }
+      },
+      "NLog.InstallNLogConfig/2.0.0": {
+        "dependencies": {
+          "NLog": "6.0.0-rc2"
         }
       },
       "NLog.Web.AspNetCore/5.5.0": {
@@ -802,6 +808,13 @@
       "sha512": "sha512-qJztVUx1hu3usgSxAd6rNL/olFoSG0LYzf6Qmq+xOBcF1rV5ZpBIsG6AOUMFVqgSg28Sgg/sNCKNK4Kow6xelA==",
       "path": "nlog.extensions.logging/6.0.0-rc2",
       "hashPath": "nlog.extensions.logging.6.0.0-rc2.nupkg.sha512"
+    },
+    "NLog.InstallNLogConfig/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DRxYrPn+abNwJtGsbhlVSxU7F763lnhdsTt4aUN2jtfLNXdv6Yh0Gyw7iU1y5RDT7tCWfgzqseU94GZi2HaGvg==",
+      "path": "nlog.installnlogconfig/2.0.0",
+      "hashPath": "nlog.installnlogconfig.2.0.0.nupkg.sha512"
     },
     "NLog.Web.AspNetCore/5.5.0": {
       "type": "package",

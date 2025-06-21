@@ -17,10 +17,10 @@ namespace CRM_Api.Controllers
             try
             {
                 var reader = SqlHelper.ExecuteReader(@"
-                    SELECT u.Id, u.Username, u.Email, u.Password, u.RoleId, r.Name
-                    FROM Users u
-                    JOIN Roles r ON u.RoleId = r.Id
-                    WHERE u.Username = @Identifier OR u.Email = @Identifier",
+            SELECT u.Id, u.Username, u.Email, u.Password, u.RoleId, r.Name
+            FROM Users u WITH (NOLOCK)
+            JOIN Roles r WITH (NOLOCK) ON u.RoleId = r.Id
+            WHERE u.Username = @Identifier OR u.Email = @Identifier",
                     new[] { new SqlParameter("@Identifier", model.UserName) });
 
                 using (reader)
@@ -49,7 +49,6 @@ namespace CRM_Api.Controllers
                                 Username = user.Username,
                                 Email = user.Email
                             });
-
                         }
                         else
                         {
@@ -67,6 +66,7 @@ namespace CRM_Api.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
 
     }
 }

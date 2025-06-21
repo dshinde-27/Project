@@ -605,6 +605,12 @@
           }
         }
       },
+      "NLog.InstallNLogConfig/2.0.0": {
+        "type": "package",
+        "dependencies": {
+          "NLog": "4.0.0"
+        }
+      },
       "NLog.Web.AspNetCore/5.5.0": {
         "type": "package",
         "dependencies": {
@@ -2107,6 +2113,21 @@
         "nlog.extensions.logging.nuspec"
       ]
     },
+    "NLog.InstallNLogConfig/2.0.0": {
+      "sha512": "DRxYrPn+abNwJtGsbhlVSxU7F763lnhdsTt4aUN2jtfLNXdv6Yh0Gyw7iU1y5RDT7tCWfgzqseU94GZi2HaGvg==",
+      "type": "package",
+      "path": "nlog.installnlogconfig/2.0.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "nlog.installnlogconfig.2.0.0.nupkg.sha512",
+        "nlog.installnlogconfig.nuspec",
+        "tools/netfx35/NLog.InstallNLogConfig.exe",
+        "tools/netfx40/NLog.InstallNLogConfig.exe",
+        "tools/netfx45/NLog.InstallNLogConfig.exe"
+      ]
+    },
     "NLog.Web.AspNetCore/5.5.0": {
       "sha512": "MFDhgF9lHxq74Nmf3rNNHs/axsPpYgnZXNyAhKj9KKctJ0ZlrR+HR/184AQzu4h0KIH9SgRHeLgbWK9aCWWtRw==",
       "type": "package",
@@ -3336,6 +3357,7 @@
       "Microsoft.Extensions.ApiDescription.Client >= 7.0.2",
       "NLog >= 6.0.0-rc2",
       "NLog.Extensions.Logging >= 6.0.0-rc2",
+      "NLog.InstallNLogConfig >= 2.0.0",
       "NLog.Web.AspNetCore >= 5.5.0",
       "NSwag.ApiDescription.Client >= 13.18.2",
       "Newtonsoft.Json >= 13.0.1",
@@ -3414,6 +3436,10 @@
           "NLog.Extensions.Logging": {
             "target": "Package",
             "version": "[6.0.0-rc2, )"
+          },
+          "NLog.InstallNLogConfig": {
+            "target": "Package",
+            "version": "[2.0.0, )"
           },
           "NLog.Web.AspNetCore": {
             "target": "Package",
