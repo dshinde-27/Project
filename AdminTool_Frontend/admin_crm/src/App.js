@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Login from './Authentication/Login';
 import ForgetPassword from './Authentication/ForgetPassword';
 import User from './User Management/User';
@@ -15,15 +15,29 @@ import OpenMail from './Email/OpenMail';
 import Chat from './Chat/Chat';
 import ChatList from './Chat/ChatList';
 
+// Helper to check auth
+const isAuthenticated = () => !!localStorage.getItem("username");
+
+// Save original path for redirect
+const ProtectedRoute = ({ children }) => {
+  const location = useLocation();
+
+  if (!isAuthenticated()) {
+    localStorage.setItem("redirectAfterLogin", location.pathname + location.search);
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+};
+
+// Layout wrapper (optional, can contain Sidebar/Navbar if needed)
+const AuthenticatedLayout = ({ children }) => (
+  <div className="app-layout">
+    <div className="main-content">{children}</div>
+  </div>
+);
+
 function App() {
-  const AuthenticatedLayout = ({ children }) => (
-    <div className="app-layout">
-      {/* <Sidebar /> */}
-      <div className="main-content">
-        {children}
-      </div>
-    </div>
-  );
   return (
     <Router>
       <Routes>
@@ -31,45 +45,45 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/forgetPassword" element={<ForgetPassword />} />
 
-        {/* Protected Routes with Sidebar */}
+        {/* Protected Routes */}
         <Route path="/user" element={
-          <AuthenticatedLayout><User /></AuthenticatedLayout>
+          <ProtectedRoute><AuthenticatedLayout><User /></AuthenticatedLayout></ProtectedRoute>
         } />
         <Route path="/role" element={
-          <AuthenticatedLayout><Role /></AuthenticatedLayout>
+          <ProtectedRoute><AuthenticatedLayout><Role /></AuthenticatedLayout></ProtectedRoute>
         } />
         <Route path="/page" element={
-          <AuthenticatedLayout><Page /></AuthenticatedLayout>
+          <ProtectedRoute><AuthenticatedLayout><Page /></AuthenticatedLayout></ProtectedRoute>
         } />
         <Route path="/country" element={
-          <AuthenticatedLayout><Country /></AuthenticatedLayout>
+          <ProtectedRoute><AuthenticatedLayout><Country /></AuthenticatedLayout></ProtectedRoute>
         } />
         <Route path="/state" element={
-          <AuthenticatedLayout><State /></AuthenticatedLayout>
+          <ProtectedRoute><AuthenticatedLayout><State /></AuthenticatedLayout></ProtectedRoute>
         } />
         <Route path="/city" element={
-          <AuthenticatedLayout><City /></AuthenticatedLayout>
+          <ProtectedRoute><AuthenticatedLayout><City /></AuthenticatedLayout></ProtectedRoute>
         } />
         <Route path="/category" element={
-          <AuthenticatedLayout><Category /></AuthenticatedLayout>
+          <ProtectedRoute><AuthenticatedLayout><Category /></AuthenticatedLayout></ProtectedRoute>
         } />
         <Route path="/subcatgeory" element={
-          <AuthenticatedLayout><SubCategory /></AuthenticatedLayout>
+          <ProtectedRoute><AuthenticatedLayout><SubCategory /></AuthenticatedLayout></ProtectedRoute>
         } />
         <Route path="/attribute" element={
-          <AuthenticatedLayout><Attribute /></AuthenticatedLayout>
+          <ProtectedRoute><AuthenticatedLayout><Attribute /></AuthenticatedLayout></ProtectedRoute>
         } />
         <Route path="/email" element={
-          <AuthenticatedLayout><Inbox /></AuthenticatedLayout>
+          <ProtectedRoute><AuthenticatedLayout><Inbox /></AuthenticatedLayout></ProtectedRoute>
         } />
         <Route path="/email/:id" element={
-          <AuthenticatedLayout><OpenMail /></AuthenticatedLayout>
+          <ProtectedRoute><AuthenticatedLayout><OpenMail /></AuthenticatedLayout></ProtectedRoute>
         } />
         <Route path="/chat" element={
-          <AuthenticatedLayout><Chat /></AuthenticatedLayout>
+          <ProtectedRoute><AuthenticatedLayout><Chat /></AuthenticatedLayout></ProtectedRoute>
         } />
         <Route path="/chatlist" element={
-          <AuthenticatedLayout><ChatList /></AuthenticatedLayout>
+          <ProtectedRoute><AuthenticatedLayout><ChatList /></AuthenticatedLayout></ProtectedRoute>
         } />
       </Routes>
     </Router>

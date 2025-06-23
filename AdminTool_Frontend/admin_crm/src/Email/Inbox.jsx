@@ -4,6 +4,7 @@ import Navbar from '../Layout/Navbar';
 import Sidebar from '../Layout/Sidebar';
 import ComposeModal from '../Email/ComposeModal';
 import MoveToFolderModal from '../Email/MoveToFolderModal';
+import { FaFolder } from "react-icons/fa6";
 
 import {
     MdInbox, MdOutlineStar, MdSend, MdDrafts, MdDelete, MdReport,
@@ -64,18 +65,38 @@ function Inbox() {
         setLoading(true);
         setError(null);
 
-        let endpoint = "/emails";
-        switch (selectedTab) {
-            case "inbox": endpoint = "/inbox"; break;
-            case "sent": endpoint = "/sent"; break;
-            case "starred": endpoint = "/starred"; break;
-            case "allmail": endpoint = "/emails"; break;
-            case "archive": endpoint = "/archived"; break;
-            case "trash": endpoint = "/deleted"; break;
+        let endpoint;
+
+        switch (selectedTab.toLowerCase()) {
+            case "inbox":
+                endpoint = "/inbox";
+                break;
+            case "sent":
+                endpoint = "/sent";
+                break;
+            case "starred":
+                endpoint = "/starred";
+                break;
+            case "allmail":
+                endpoint = "/emails";
+                break;
+            case "archive":
+                endpoint = "/archived";
+                break;
+            case "trash":
+                endpoint = "/deleted";
+                break;
+            default:
+                // Assume it's a custom folder
+                endpoint = `/folder/${encodeURIComponent(selectedTab)}`;
+                break;
         }
 
         fetch(`${API_BASE}${endpoint}`)
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+                return res.json();
+            })
             .then(data => {
                 setEmails(Array.isArray(data) ? data : []);
                 setLoading(false);
@@ -86,6 +107,7 @@ function Inbox() {
                 setLoading(false);
             });
     };
+
 
     const performAction = (endpointSuffix, method = "POST") => {
         Promise.all(selectedEmails.map(id =>
@@ -136,32 +158,47 @@ function Inbox() {
         alert("Spam functionality not implemented yet.");
     };
 
-    const handleMoveToFolder = async ({ folderName, rule }) => {
-        try {
-            for (const id of selectedEmails) {
-                await fetch(`${API_BASE}/move/${id}?folder=${encodeURIComponent(folderName)}`, {
-                    method: "POST",
-                });
-            }
+    const handleMoveToFolder = ({ folderName, rule }) => {
+        fetch(`${API_BASE}/move?folder=${encodeURIComponent(folderName)}&rule=${encodeURIComponent(rule)}`, {
+            method: 'POST'
+        })
+            .then(res => res.ok ? res.text() : Promise.reject("Failed to move"))
+            .then(msg => {
+                alert(msg);
 
-            // Optional: Save the rule if provided
-            if (rule) {
-                await fetch(`${API_BASE}/rules`, {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ domain: rule, folder: folderName })
+                // Avoid adding duplicates (case-insensitive match)
+                setCustomFolders(prev => {
+                    const exists = prev.some(f => f.toLowerCase() === folderName.toLowerCase());
+                    return exists ? prev : [...prev, folderName];
                 });
-            }
 
-            alert(`${selectedEmails.length} email(s) moved to folder "${folderName}"${rule ? ` with rule "${rule}"` : ""}`);
-            setSelectedEmails([]);
-            fetchEmails();
-        } catch (error) {
-            console.error("Error moving emails:", error);
-        }
+                fetchEmails(); // Refresh list
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Error moving emails.");
+            });
     };
+
+    const [customFolders, setCustomFolders] = useState(() => {
+        const saved = localStorage.getItem("customFolders");
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("customFolders", JSON.stringify(customFolders));
+    }, [customFolders]);
+
+    useEffect(() => {
+        fetch(`${API_BASE}/folders`)
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setCustomFolders(data);
+                }
+            })
+            .catch(err => console.error("Failed to load folders", err));
+    }, []);
 
     return (
         <div className='application-page'>
@@ -198,13 +235,19 @@ function Inbox() {
                             <li className={selectedTab === "trash" ? "active" : ""} onClick={() => setSelectedTab("trash")}>
                                 <MdDelete /> Trash <span className='count'>{trashCount}</span>
                             </li>
+                            {customFolders.map(folder => (
+                                <li key={folder} className={selectedTab === folder ? "active" : ""} onClick={() => setSelectedTab(folder)} style={{marginRight:"98px"}}>
+                                    <FaFolder/> {folder}
+                                </li>
+                            ))}
+
                         </ul>
                     </div>
 
                     <div className='email-inbox'>
                         {!selectedEmail ? (
                             <>
-                                <h2>{selectedTab.charAt(0).toUpperCase() + selectedTab.slice(1)} Emails</h2>
+                                <h2>{selectedTab.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())} Emails</h2>
 
                                 <div className="pagination">
                                     <button onClick={() => setCurrentPage(p => Math.max(0, p - 1))} disabled={currentPage === 0}>

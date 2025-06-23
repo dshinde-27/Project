@@ -1,0 +1,114 @@
+:root {
+  --light-yellow: #fff5d7;
+  --pink-red: #ff5e6c;
+  --amber: #feb300;
+  --light-pink: #ffaaab;
+  --azure-blue: #0582ca;
+
+  --primary-text: #0582ca;
+  --secondary-text: #ff5e6c;
+
+  --pink-red-hover: #e04855;
+  --azure-blue-dark: #0367a1;
+  --neutral-light: #f9f9f9;
+  --neutral-gray: #ececec;
+  --modal-bg: rgba(0, 0, 0, 0.5);
+  --white: #ffffff;
+  --light-border: #ddd;
+}
+
+.chat-page {
+  overflow: hidden;
+  background-color: var(--neutral-light);
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.chat-sidebar {
+  width: 300px;
+  border-right: 1px solid var(--light-border);
+  padding: 1rem;
+  background-color: var(--white);
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--light-border);
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-input:focus {
+  border-color: var(--azure-blue);
+  box-shadow: 0 0 0 2px rgba(5, 130, 202, 0.1);
+}
+
+.chat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chat-item {
+  padding: 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  color: var(--primary-text);
+}
+
+.chat-item:hover {
+  background-color: var(--neutral-gray);
+}
+
+.chat-item.active {
+  background-color: var(--light-yellow);
+  color: var(--pink-red);
+  font-weight: bold;
+}
+
+.chat-details {
+  flex: 1;
+  padding: 1rem;
+  background-color: var(--white);
+  overflow-y: auto;
+}
+
+.chat-messages {
+  margin-top: 1rem;
+  color: var(--primary-text);
+}
+
+.chat-input-section {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-message-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.chat-send-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--azure-blue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.chat-send-button:hover {
+  background-color: var(--azure-blue-dark);
+}

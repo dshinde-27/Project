@@ -55,7 +55,7 @@ function MoveToFolderModal({ isOpen, onClose, onSubmit }) {
                         type="text"
                         value={folderName}
                         onChange={(e) => setFolderName(e.target.value)}
-                        placeholder="e.g., Job Alerts"
+                        placeholder="Folder name"
                         required
                     />
                 </label>

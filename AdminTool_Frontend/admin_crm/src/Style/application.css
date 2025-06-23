@@ -556,9 +556,9 @@ font-size: 16px;
 
 .modal-content {
   background: white;
-  padding: 2rem;
+  padding: 10px;
   border-radius: 10px;
-  min-width: 300px;
+  min-width: 400px;
 }
 
 .modal-content h3 {
@@ -570,13 +570,17 @@ font-size: 16px;
   margin-bottom: 1rem;
 }
 
-.modal-content input,
-.modal-content select {
-  width: 100%;
+.modal-content input {
+  width: 96%;
   padding: 0.5rem;
   margin-top: 0.3rem;
 }
 
+.modal-content select{
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+}
 .modal-actions {
   display: flex;
   justify-content: space-between;
