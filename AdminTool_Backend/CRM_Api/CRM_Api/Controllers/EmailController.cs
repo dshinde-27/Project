@@ -352,11 +352,13 @@ namespace CRM_Api.Controllers
         [HttpGet("Deleted")]
         public IActionResult GetDeletedEmails()
         {
+            string conn = _configuration.GetConnectionString("Connection");
+
             Logger.Info("Fetching deleted emails.");
             try
             {
                 string query = "SELECT * FROM Emails WHERE IsDeleted = 1";
-                DataTable dt = SqlHelper.ExecuteDataTable(query, null);
+                DataTable dt = SqlHelper.ExecuteDataTable(query,conn, null);
 
                 var emails = new List<SentEmail>();
 
@@ -493,28 +495,49 @@ namespace CRM_Api.Controllers
             }
         }
 
-
-        [HttpPost("move/{id}")]
-        public IActionResult MoveToFolder(int id, [FromQuery] string folder, [FromQuery] string rule)
+        [HttpPost("move/{id?}")]
+        public IActionResult MoveToFolder(int? id, [FromQuery] string folder, [FromQuery] string rule)
         {
-            Logger.Info("Moving email with ID: " + id + " to folder: '" + folder + "' with rule: '" + rule + "'");
+            Logger.Info($"Moving email(s) to folder: '{folder}' with rule: '{rule}', ID: {id}");
+
             try
             {
                 string conn = _configuration.GetConnectionString("Connection");
+                string query = "";
+                int rowsAffected = 0;
 
-                string query = "UPDATE Emails SET Folder = @Folder WHERE Id = @Id";
+                if (id.HasValue)
+                {
+                    query = "UPDATE Emails SET Folder = @Folder WHERE Id = @Id";
+                    rowsAffected = SqlHelper.ExecuteNonQueryWithParam(conn, query,
+                        new SqlParameter("@Folder", folder),
+                        new SqlParameter("@Id", id.Value));
+                }
+                else if (!string.IsNullOrWhiteSpace(rule))
+                {
+                    var trimmedRule = rule.Trim();
+                    query = @"
+                        UPDATE Emails
+                        SET Folder = @Folder
+                        WHERE 
+                            (FromEmail LIKE @Rule) OR 
+                            (ToEmail LIKE @Rule)";
+                    rowsAffected = SqlHelper.ExecuteNonQueryWithParam(conn, query,
+                        new SqlParameter("@Folder", folder),
+                        new SqlParameter("@Rule", "%" + trimmedRule));
+                }
+                else
+                {
+                    return BadRequest("Either email ID or rule must be provided.");
+                }
 
-                SqlHelper.ExecuteNonQueryWithParam(conn, query,
-                    new SqlParameter("@Folder", folder),
-                    new SqlParameter("@Id", id));
-
-                Logger.Info("Email with ID: " + id + " successfully moved to folder: '" + folder + "' with rule: '" + rule + "'");
-                return Ok("Email moved to folder '" + folder + "' with rule '" + rule + "'.");
+                Logger.Info($"{rowsAffected} email(s) successfully moved to folder: '{folder}'");
+                return Ok($"{rowsAffected} email(s) moved to folder '{folder}'.");
             }
             catch (Exception ex)
             {
-                Logger.Error("Error moving email ID: " + id + " to folder '" + folder + "': " + ex.Message);
-                return StatusCode(500, "Error moving email: " + ex.Message);
+                Logger.Error($"Error moving emails to folder '{folder}': " + ex.Message);
+                return StatusCode(500, "Error: " + ex.Message);
             }
         }
 
@@ -527,19 +550,19 @@ namespace CRM_Api.Controllers
                 string conn = _configuration.GetConnectionString("Connection");
 
                 string query = @"
-                    SELECT DISTINCT 
-                        LOWER(SUBSTRING(FromEmail, CHARINDEX('@', FromEmail) + 1, LEN(FromEmail))) AS Domain
-                    FROM Emails
-                    WHERE FromEmail LIKE '%@%.%'
+                        SELECT DISTINCT 
+                            LOWER(SUBSTRING(FromEmail, CHARINDEX('@', FromEmail) + 1, LEN(FromEmail))) AS Domain
+                        FROM Emails
+                        WHERE FromEmail LIKE '%@%.%'
 
-                    UNION
+                        UNION
 
-                    SELECT DISTINCT 
-                        LOWER(SUBSTRING(ToEmail, CHARINDEX('@', ToEmail) + 1, LEN(ToEmail))) AS Domain
-                    FROM Emails
-                    WHERE ToEmail LIKE '%@%.%'";
+                        SELECT DISTINCT 
+                            LOWER(SUBSTRING(ToEmail, CHARINDEX('@', ToEmail) + 1, LEN(ToEmail))) AS Domain
+                        FROM Emails
+                        WHERE ToEmail LIKE '%@%.%'";
 
-                DataTable dt = SqlHelper.ExecuteDataTable(query, conn);
+                DataTable dt = SqlHelper.ExecuteDataTable(query, conn ,null);
 
                 var domains = dt.AsEnumerable()
                                 .Select(row => row["Domain"].ToString())
@@ -557,6 +580,70 @@ namespace CRM_Api.Controllers
                 return StatusCode(500, "Internal Server Error: " + ex.Message);
             }
         }
+
+        [HttpGet("folders")]
+        public IActionResult GetFolders()
+        {
+            try
+            {
+                string conn = _configuration.GetConnectionString("Connection");
+                string query = "SELECT DISTINCT Folder FROM Emails WHERE Folder IS NOT NULL AND Folder <> ''";
+
+                var dt = SqlHelper.ExecuteQueryDT(conn, query);
+                var folders = dt.Rows.Cast<DataRow>()
+                                     .Select(row => row["Folder"].ToString())
+                                     .ToList();
+
+                return Ok(folders);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error fetching folders: " + ex.Message);
+                return StatusCode(500, "Failed to get folders");
+            }
+        }
+
+        [HttpGet("folder/{folderName}")]
+        public IActionResult GetEmailsByFolder(string folderName)
+        {
+            try
+            {
+                string conn = _configuration.GetConnectionString("Connection");
+
+                string query = @"
+                    SELECT Id, FromEmail, ToEmail, Subject, Body, Folder, ReceivedTime
+                    FROM Emails
+                    WHERE LOWER(Folder) = LOWER(@FolderName)
+                    ORDER BY ReceivedTime DESC";
+
+                DataTable dt = SqlHelper.ExecuteDataTable(query,conn, new SqlParameter[] {new SqlParameter("@FolderName", folderName)});
+
+
+                var emails = dt.AsEnumerable().Select(row => new SentEmail
+                {
+                    Id = Convert.ToInt32(row["Id"]),
+                    FromEmail = row["FromEmail"].ToString(),
+                    ToEmail = row["ToEmail"].ToString(),
+                    Subject = row["Subject"].ToString(),
+                    Body = row["Body"].ToString(),
+                    Folder = row["Folder"].ToString(),
+                    ReceivedTime = Convert.ToDateTime(row["ReceivedTime"])
+                }).ToList();
+
+                if (emails == null || emails.Count == 0)
+                {
+                    return NotFound($"No emails found in folder: {folderName}");
+                }
+
+                return Ok(emails);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error retrieving emails by folder: " + ex.Message);
+                return StatusCode(500, "Error retrieving emails.");
+            }
+        }
+
 
         [HttpPost("markasread/{id}")]
         public IActionResult MarkAsRead(int id)

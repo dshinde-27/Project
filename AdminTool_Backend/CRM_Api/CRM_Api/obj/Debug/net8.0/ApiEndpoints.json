@@ -16,6 +16,59 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "CRM_Api.Controllers.ChatController",
+    "Method": "ApproveMessage",
+    "RelativePath": "api/Chat/ApproveMessage",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "sender",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "receiver",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.ChatController",
+    "Method": "SendMessage",
+    "RelativePath": "api/Chat/SendMessage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "msg",
+        "Type": "CRM_Api.Models.Chat\u002BChatMessageDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.ChatController",
+    "Method": "GetUsers",
+    "RelativePath": "api/Chat/Users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "currentUser",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CRM_Api.Controllers.EmailController",
     "Method": "GetEmailById",
     "RelativePath": "api/Email/{id}",
@@ -95,6 +148,32 @@
   },
   {
     "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "GetEmailsByFolder",
+    "RelativePath": "api/Email/folder/{folderName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "folderName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
+    "Method": "GetFolders",
+    "RelativePath": "api/Email/folders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CRM_Api.Controllers.EmailController",
     "Method": "GetInboxEmails",
     "RelativePath": "api/Email/inbox",
     "HttpMethod": "GET",
@@ -166,8 +245,8 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       },
       {
         "Name": "folder",

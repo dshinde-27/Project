@@ -32,6 +32,7 @@ namespace CRM_Api.Models
         public bool IsStarred { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsRead { get; set; } // ← Add this
+        public string Folder { get; set; }
     }
 
 

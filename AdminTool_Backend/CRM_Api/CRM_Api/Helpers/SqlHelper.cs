@@ -158,9 +158,9 @@ namespace CRM_Api.Helpers
             await conn.OpenAsync();
             return await cmd.ExecuteNonQueryAsync();
         }
-        public static DataTable ExecuteDataTable(string query, string connectionString, SqlParameter[] parameters = null)
+        public static DataTable ExecuteDataTable(string query, string connectionString, SqlParameter[] parameters)
         {
-            using SqlConnection conn = new(GetConnectionString());
+            using SqlConnection conn = new(connectionString); // Use the passed-in value
             using SqlCommand cmd = new(query, conn);
             cmd.CommandType = CommandType.Text;
             if (parameters != null) cmd.Parameters.AddRange(parameters);
@@ -169,5 +169,40 @@ namespace CRM_Api.Helpers
             adapter.Fill(dt);
             return dt;
         }
+
+        public static object ExecuteQuery(string? conn, string query)
+        {
+            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                DataTable dt = new DataTable();
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    dt.Load(reader);
+                }
+
+                return dt;
+            }
+        }
+
+        public static DataTable ExecuteQueryDT(string? conn, string query)
+        {
+            using (SqlConnection connection = new SqlConnection(conn))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                DataTable dt = new DataTable();
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    dt.Load(reader);
+                }
+
+                return dt;
+            }
+        }
+
     }
 }
